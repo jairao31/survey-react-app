@@ -64,7 +64,7 @@ module.exports = {
     if (!questionId || !cQuestionId) throw "Id missing!";
 
     db.query(
-      "SELECT answer FROM answers WHERE questionId = ? AND cQuestionId = ?",
+      "SELECT * FROM answers WHERE questionId = ? AND cQuestionId = ?",
       [questionId, cQuestionId],
       (err, result) => {
         if (err) {

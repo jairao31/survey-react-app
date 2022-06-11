@@ -7,33 +7,33 @@ const db = mysql.createConnection({
 });
 
 module.exports = {
-  async getQuestion(surveyId) {
-    if (!surveyId) throw "surveyId missing!";
+  async getQuestionsByQId(questionId) {
+    if (!questionId) throw "surveyId missing!";
 
     db.query(
-      "SELECT * FROM questions WHERE surveyId = ?",
-      surveyId,
+      "SELECT * FROM questionChoices WHERE questionId = ?",
+      questionId,
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          return "question found!";
+          return "question choice found!";
         }
       }
     );
   },
-  async createAnswer(aId, answer, surveyId, questionId) {
-    if (!aId || !answer || !surveyId || !questionId)
+  async createAnswer(aId, answer, questionId, cQuestionId) {
+    if (!aId || !answer || !questionId || !cQuestionId)
       throw "answer details missing!";
 
     db.query(
-      "INSERT INTO answers (aId, answer, surveyId, questionId) VALUES (?,?,?,?)",
-      [aId, answer, surveyId, questionId],
+      "INSERT INTO answers (aId, answer, questionId, cQuestionId) VALUES (?,?,?,?)",
+      [aId, answer, questionId, cQuestionId],
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          return "question added!";
+          return "answer added!";
         }
       }
     );
