@@ -7,6 +7,7 @@ const db = mysql.createConnection({
 });
 
 module.exports = {
+  // to create new survey
   async createSurvey(surveyId, name, desc) {
     if (!surveyId || !name || !desc) throw "survey details missing!";
 
@@ -23,6 +24,7 @@ module.exports = {
     );
   },
 
+  // to create questions for a survey
   async createQuestion(qId, question, type, surveyId) {
     if (!qId || !question || !type || !surveyId)
       throw "question details missing!";
@@ -39,19 +41,49 @@ module.exports = {
       }
     );
   },
-  async getAnswer(surveyId, qId) {
-    if (!surveyId) throw "surveyId missing!";
+
+  async createQuestionChoice(cId, cQuestion, questionId) {
+    if (!cId || !cQuestion || !questionId)
+      throw "question choice details missing!";
 
     db.query(
-      "SELECT * FROM answers WHERE surveyId = ? AND qId = ?",
-      [surveyId, qId],
+      "INSERT INTO questionChoices (cId, cQuestion, questionId) VALUES (?,?,?)",
+      [cId, cQuestion, questionId],
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          return "answer found!";
+          return "question choice added!";
         }
       }
     );
+  },
+
+  // to get answers in a survey
+  async getAnswer(questionId, cQuestionId) {
+    if (!questionId || !cQuestionId) throw "Id missing!";
+
+    db.query(
+      "SELECT answer FROM answers WHERE questionId = ? AND cQuestionId = ?",
+      [questionId, cQuestionId],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          return result;
+        }
+      }
+    );
+  },
+
+  // get all survey
+  async getAllSurvey() {
+    db.query("SELECT * FROM surveyList", (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        return result;
+      }
+    });
   },
 };
