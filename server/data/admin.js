@@ -42,13 +42,14 @@ module.exports = {
     );
   },
 
-  async createQuestionChoice(cId, cQuestion, questionId) {
-    if (!cId || !cQuestion || !questionId)
+  // to create question choices
+  async createQuestionChoice(cId, cQuestion, questionId, surveyId) {
+    if (!cId || !cQuestion || !questionId || !surveyId)
       throw "question choice details missing!";
 
     db.query(
-      "INSERT INTO questionChoices (cId, cQuestion, questionId) VALUES (?,?,?)",
-      [cId, cQuestion, questionId],
+      "INSERT INTO questionChoices (cId, cQuestion, questionId, surveyId) VALUES (?,?,?,?)",
+      [cId, cQuestion, questionId, surveyId],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -59,13 +60,13 @@ module.exports = {
     );
   },
 
-  // to get answers in a survey
-  async getAnswer(questionId, cQuestionId) {
-    if (!questionId || !cQuestionId) throw "Id missing!";
+  // to get list of questions in a survey
+  async getAllQuestions(surveyId) {
+    if (!surveyId) throw "Survey Id missing!";
 
     db.query(
-      "SELECT * FROM answers WHERE questionId = ? AND cQuestionId = ?",
-      [questionId, cQuestionId],
+      "SELECT * FROM questions WHERE surveyId = ?",
+      surveyId,
       (err, result) => {
         if (err) {
           console.log(err);
@@ -76,12 +77,47 @@ module.exports = {
     );
   },
 
-  // get all survey
+  // to get all the choices in a question
+  async getAllQchoices(surveyId, questionId) {
+    if (!surveyId || !questionId) throw "Id missing!";
+
+    db.query(
+      "SELECT * FROM questionChoices WHERE questionId = ? AND surveyId = ?",
+      [questionId, surveyId],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          return result;
+        }
+      }
+    );
+  },
+
+  // to get answers of a choice of a question in a survey by userId
+  async getAnswerByUser(uId, questionId, cQuestionId, surveyId) {
+    if (!uId || !questionId || !cQuestionId || !surveyId) throw "Id missing!";
+
+    db.query(
+      "SELECT * FROM answers WHERE questionId = ? AND cQuestionId = ? AND surveyId = ? AND uId = ?",
+      [questionId, cQuestionId, surveyId, uId],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          return result;
+        }
+      }
+    );
+  },
+
+  // to get all survey
   async getAllSurvey() {
     db.query("SELECT * FROM surveyList", (err, result) => {
       if (err) {
         console.log(err);
       } else {
+        // console.log(typeof result);
         return result;
       }
     });

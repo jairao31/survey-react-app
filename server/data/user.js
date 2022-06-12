@@ -7,33 +7,36 @@ const db = mysql.createConnection({
 });
 
 module.exports = {
-  async getQuestionsByQId(questionId) {
-    if (!questionId) throw "surveyId missing!";
+  // to create new user
+  async createUser(uId, username) {
+    if (!uId || !username) throw "details missing!";
 
     db.query(
-      "SELECT * FROM questionChoices WHERE questionId = ?",
-      questionId,
+      "INSERT INTO user (uId, username) VALUES (?,?)",
+      [uId, username],
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          return "question choice found!";
+          return "New user added!";
         }
       }
     );
   },
-  async createAnswer(aId, answer, questionId, cQuestionId) {
-    if (!aId || !answer || !questionId || !cQuestionId)
+
+  // to create an answer for a choice in a question
+  async createAnswer(aId, uId, answer, questionId, cQuestionId, surveyId) {
+    if (!aId || !uId || !answer || !questionId || !cQuestionId || !surveyId)
       throw "answer details missing!";
 
     db.query(
-      "INSERT INTO answers (aId, answer, questionId, cQuestionId) VALUES (?,?,?,?)",
-      [aId, answer, questionId, cQuestionId],
+      "INSERT INTO answers (aId, uId, answer, questionId, cQuestionId, surveyId) VALUES (?,?,?,?,?,?)",
+      [aId, uId, answer, questionId, cQuestionId, surveyId],
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          return "answer added!";
+          return result;
         }
       }
     );
