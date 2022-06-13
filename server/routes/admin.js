@@ -40,7 +40,7 @@ router.post("/createSurvey", (req, res) => {
       if (err) {
         res.json(err);
       } else {
-        res.json("New survey added!");
+        res.json(`New survey ${surveyId} added!`);
       }
     }
   );

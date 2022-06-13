@@ -61,7 +61,7 @@ router.post("/createAnswer/:surveyId/:qId/:uId", async (req, res) => {
       if (err) {
         res.json(err);
       } else {
-        res.json(`Answer submitted for ${uID}`);
+        res.json(`Answer submitted for user id ${uID}`);
       }
     }
   );

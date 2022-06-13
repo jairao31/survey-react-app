@@ -1,7 +1,7 @@
-const adminData = require("./admin");
-const userData = require("./user");
+// const adminData = require("./admin");
+// const userData = require("./user");
 
-module.exports = {
-  admin: adminData,
-  user: userData,
-};
+// module.exports = {
+//   admin: adminData,
+//   user: userData,
+// };
