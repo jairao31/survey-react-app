@@ -8,6 +8,8 @@ const db = mysql.createConnection({
   database: "survey",
 });
 
+const { v4 } = require("uuid");
+
 //route to get all user
 router.get("/", (req, res) => {
   db.query("SELECT * FROM user", (err, result) => {
@@ -29,7 +31,8 @@ router.get("/", (req, res) => {
 //route to create user
 router.post("/createUser", (req, res) => {
   const reqData = req.body;
-  const { uId, username } = reqData;
+  const { username } = reqData;
+  const uId = v4();
   db.query(
     "INSERT INTO user (uId, username) VALUES (?,?)",
     [uId, username],
@@ -44,21 +47,21 @@ router.post("/createUser", (req, res) => {
 });
 
 //route to create an answer for a choice in a question in a survey
-router.post("/createAnswer/:surveyId/:qId/:cId/:uId", async (req, res) => {
+router.post("/createAnswer/:surveyId/:qId/:uId", async (req, res) => {
   const reqData = req.body;
-  const { aId, answer } = reqData;
+  const { answer, cId } = reqData;
   const surveyID = req.params.surveyId;
   const qID = req.params.qId;
-  const cID = req.params.cId;
   const uID = req.params.uId;
+  const aId = v4();
   db.query(
     "INSERT INTO answers (aId, uId, answer, questionId, cQuestionId, surveyId) VALUES (?,?,?,?,?,?)",
-    [aId, uID, answer, qID, cID, surveyID],
+    [aId, uID, answer, qID, cId, surveyID],
     (err, result) => {
       if (err) {
         res.json(err);
       } else {
-        res.json(`Answer submitted for ${username}`);
+        res.json(`Answer submitted for ${uID}`);
       }
     }
   );

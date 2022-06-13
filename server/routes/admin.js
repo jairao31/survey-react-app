@@ -8,6 +8,8 @@ const db = mysql.createConnection({
   database: "survey",
 });
 
+const { v4 } = require("uuid");
+
 //Route to get all survey
 router.get("/", (req, res) => {
   db.query("SELECT * FROM surveyList", (err, result) => {
@@ -45,10 +47,11 @@ router.post("/createSurvey", (req, res) => {
 });
 
 //route to create question for survey
-router.post("/createQuestion/:surveyId", async (req, res) => {
+router.post("/createQuestion/:surveyId", (req, res) => {
   const surveyID = req.params.surveyId;
   const reqData = req.body;
-  const { qId, question, type } = reqData;
+  const { question, type } = reqData;
+  const qId = v4();
   db.query(
     "INSERT INTO questions (qId, question, type, surveyId) VALUES (?,?,?,?)",
     [qId, question, type, surveyID],
@@ -63,11 +66,12 @@ router.post("/createQuestion/:surveyId", async (req, res) => {
 });
 
 //route to create question choice
-router.post("/createQuestionChoice/:surveyId/:qId", async (req, res) => {
+router.post("/createQuestionChoice/:surveyId/:qId", (req, res) => {
   const surveyID = req.params.surveyId;
   const qID = req.params.qId;
   const reqData = req.body;
-  const { cId, cQuestion } = reqData;
+  const { cQuestion } = reqData;
+  const cId = v4();
   db.query(
     "INSERT INTO questionChoices (cId, cQuestion, questionId, surveyId) VALUES (?,?,?,?)",
     [cId, cQuestion, qID, surveyID],
@@ -82,7 +86,7 @@ router.post("/createQuestionChoice/:surveyId/:qId", async (req, res) => {
 });
 
 //route to get all question
-router.get("/getAllQuestions/:surveyId", async (req, res) => {
+router.get("/getAllQuestions/:surveyId", (req, res) => {
   const surveyID = req.params.surveyId;
   db.query(
     "SELECT * FROM questions WHERE surveyId = ?",
@@ -107,7 +111,7 @@ router.get("/getAllQuestions/:surveyId", async (req, res) => {
 });
 
 //route to get all choices for a question
-router.get("/getAllQchoices/:surveyId/:questionId", async (req, res) => {
+router.get("/getAllQchoices/:surveyId/:questionId", (req, res) => {
   const surveyID = req.params.surveyId;
   const questionID = req.params.questionId;
   db.query(
@@ -132,14 +136,14 @@ router.get("/getAllQchoices/:surveyId/:questionId", async (req, res) => {
   );
 });
 
-router.get("/getAnswerByUser/:surveyId/:qId/:cId/:uId", async (req, res) => {
+//route to get answer for a question by a user
+router.get("/getAnswerByUser/:surveyId/:qId/:uId", (req, res) => {
   const surveyID = req.params.surveyId;
   const qID = req.params.qId;
-  const cID = req.params.cId;
   const uID = req.params.uId;
   db.query(
-    "SELECT * FROM answers WHERE questionId = ? AND cQuestionId = ? AND surveyId = ? AND uId = ?",
-    [qID, cID, surveyID, uID],
+    "SELECT * FROM answers WHERE questionId = ? AND surveyId = ? AND uId = ?",
+    [qID, surveyID, uID],
     (err, result) => {
       if (err) {
         res.json(err);
@@ -159,6 +163,18 @@ router.get("/getAnswerByUser/:surveyId/:qId/:cId/:uId", async (req, res) => {
       }
     }
   );
+});
+
+//route to delete survey
+router.delete("/deleteSurvey/:surveyid", (req, res) => {
+  const surveyID = req.params.surveyid;
+  db.query("DELETE FROM surveyList WHERE id = ?", surveyID, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(`Survey ${surveyID} deleted successfully!`);
+    }
+  });
 });
 
 module.exports = router;
