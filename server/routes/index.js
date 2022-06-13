@@ -11,5 +11,3 @@ const constructorMethod = (app) => {
 };
 
 module.exports = constructorMethod;
-
-//changes need to be made in routes for new api added
