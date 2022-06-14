@@ -11,6 +11,8 @@ const NewSurvey = () => {
           <input placeholder="Survey ID" />
           <br />
           <input placeholder="Survey Name" />
+          <br />
+          <textarea placeholder="Survey Description" />
         </div>
         <br />
         <div>

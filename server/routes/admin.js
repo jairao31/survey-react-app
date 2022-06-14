@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
         ob["description"] = el.description;
         arr.push(ob);
       });
-      res.json(result);
+      res.json(arr);
     }
   });
 });
