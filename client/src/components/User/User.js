@@ -8,9 +8,9 @@ const User = () => {
   return (
     <Container>
       <Navigate />
-      <h2>Welcome to User page</h2>
+      <h2>User page</h2>
       <input placeholder="Enter Survey ID"></input>
-      <button>Take Survey</button>
+      <Button>Take Survey</Button>
     </Container>
   );
 };
