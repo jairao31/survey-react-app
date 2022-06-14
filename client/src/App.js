@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <Router>
-        <div>SURVEY FORM</div>
+        <h1>Survey Generator</h1>
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/admin" element={<Admin />} />

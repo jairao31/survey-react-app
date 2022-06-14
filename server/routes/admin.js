@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
         ob["description"] = el.description;
         arr.push(ob);
       });
-      res.json(arr);
+      res.json(result);
     }
   });
 });
@@ -40,7 +40,7 @@ router.post("/createSurvey", (req, res) => {
       if (err) {
         res.json(err);
       } else {
-        res.json(`New survey ${surveyId} added!`);
+        res.json(`New survey ${surveyId} created!`);
       }
     }
   );
