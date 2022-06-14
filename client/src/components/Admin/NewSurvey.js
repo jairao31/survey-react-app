@@ -1,31 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Form, Button } from "react-bootstrap";
+import Navigate from "../Navigate";
 
 const NewSurvey = () => {
   const [surveyID, setSurveyID] = useState("");
   return (
-    <div>
+    <Container>
+      <Navigate />
       <h2>New Survey</h2>
 
       <div>
-        <div>
-          <input placeholder="Survey ID" />
-          <br />
-          <input placeholder="Survey Name" />
-          <br />
-          <textarea placeholder="Survey Description" />
+        <div className="survey-details">
+          <Form>
+            <Form.Group className="mb-3" controlId="survey-id">
+              <Form.Control type="text" placeholder="Survey ID" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="survey-name">
+              <Form.Control type="text" placeholder="Survey Name" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="survey-desc">
+              <Form.Control
+                as="textarea"
+                placeholder="Survey Description"
+                rows={3}
+              />
+            </Form.Group>
+          </Form>
         </div>
         <br />
         <div>
-          <button>New MCQ Question</button>
-          <button>New Inventory Question</button>
-          <button>New Likert Question</button>
+          <Button>+ MCQ Question</Button> <Button>+ Inventory Question</Button>{" "}
+          <Button>+ Likert Question</Button>
         </div>
         <br />
-        <form>
-          <textarea placeholder="Enter Question" />
-        </form>
       </div>
-    </div>
+    </Container>
   );
 };
 

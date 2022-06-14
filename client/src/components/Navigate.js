@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import logo from "../icons-survey.png";
 
 const Navigate = () => {
   return (
@@ -8,14 +9,13 @@ const Navigate = () => {
       <Navbar bg="dark" variant="dark" fixed="top">
         <Container>
           <Navbar.Brand>
-            {/* <img
-          alt=""
-          src="/logo.svg"
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-        />{' '} */}
-            Online Survey Generator
+            <img
+              alt=""
+              src={logo}
+              width="60"
+              height="60"
+              className="d-inline-block align-top"
+            />{" "}
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>

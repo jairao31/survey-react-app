@@ -29,15 +29,20 @@ const Admin = () => {
   return (
     <Container>
       <Navigate />
-      <h2>Welcome to Admin page</h2>
-      <Button
-        onClick={() => {
-          navigate("/admin/newsurvey");
-        }}
-      >
-        New Survey
-      </Button>
-      <h3>Survey List:</h3>
+      <div className="admin-header">
+        <h2>Admin page</h2>
+        <Button
+          onClick={() => {
+            navigate("/admin/newsurvey");
+          }}
+        >
+          New Survey
+        </Button>
+      </div>
+
+      <br />
+      <br />
+      <h4>Survey List:</h4>
       {/* <Button onClick={getSurveyList}>Show Survey List</Button> */}
       <div className="survey-list">
         {surveyList.map((val, key) => {
@@ -47,7 +52,8 @@ const Admin = () => {
               <Card.Body>
                 <Card.Title>{val.name}</Card.Title>
                 <Card.Text>{val.description}</Card.Text>
-                <Button variant="primary">Edit</Button>
+                <Button variant="success">View Submissions</Button>{" "}
+                <Button variant="primary">Edit</Button>{" "}
                 <Button onClick={() => deleteSurvey(val.id)} variant="danger">
                   Delete
                 </Button>
