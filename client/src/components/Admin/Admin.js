@@ -8,6 +8,7 @@ import Axios from "axios";
 const Admin = () => {
   const navigate = useNavigate();
   const [surveyList, setSurveyList] = useState([]);
+  const navTo = useNavigate();
 
   useEffect(() => {
     const getSurveyList = () => {
@@ -24,6 +25,10 @@ const Admin = () => {
         alert(`Survey ${id} deleted Successfully!`);
       }
     );
+  };
+
+  const handleOnClick = (id) => {
+    navTo(`/admin/viewsurvey/${id}`);
   };
 
   return (
@@ -43,7 +48,6 @@ const Admin = () => {
       <br />
       <br />
       <h4>Survey List:</h4>
-      {/* <Button onClick={getSurveyList}>Show Survey List</Button> */}
       <div className="survey-list">
         {surveyList.map((val, key) => {
           return (
@@ -52,7 +56,9 @@ const Admin = () => {
               <Card.Body>
                 <Card.Title>{val.name}</Card.Title>
                 <Card.Text>{val.description}</Card.Text>
-                <Button variant="success">View Submissions</Button>{" "}
+                <Button variant="success" onClick={() => handleOnClick(val.id)}>
+                  View Submissions
+                </Button>{" "}
                 <Button variant="primary">Edit</Button>{" "}
                 <Button onClick={() => deleteSurvey(val.id)} variant="danger">
                   Delete
