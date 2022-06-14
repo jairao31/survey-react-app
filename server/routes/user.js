@@ -10,9 +10,10 @@ const db = mysql.createConnection({
 
 const { v4 } = require("uuid");
 
-//route to get all user
-router.get("/", (req, res) => {
-  db.query("SELECT * FROM user", (err, result) => {
+//route to get all submission by user for a survey
+router.get("/getSubmission/:surveyId", (req, res) => {
+  const surveyID = req.params.surveyId;
+  db.query("SELECT * FROM user WHERE surveyId = ?", surveyID, (err, result) => {
     if (err) {
       res.json(err);
     } else {
@@ -21,6 +22,7 @@ router.get("/", (req, res) => {
         let ob = {};
         ob["uId"] = el.uId;
         ob["username"] = el.username;
+        ob["surveyId"] = el.surveyId;
         arr.push(ob);
       });
       res.json(arr);
@@ -28,19 +30,20 @@ router.get("/", (req, res) => {
   });
 });
 
-//route to create user
-router.post("/createUser", (req, res) => {
+//route to submit survey by a user
+router.post("/submitSurvey/:surveyId", (req, res) => {
   const reqData = req.body;
   const { username } = reqData;
+  const surveyID = req.params.surveyId;
   const uId = v4();
   db.query(
-    "INSERT INTO user (uId, username) VALUES (?,?)",
-    [uId, username],
+    "INSERT INTO user (uId, username, surveyId) VALUES (?,?,?)",
+    [uId, username, surveyID],
     (err, result) => {
       if (err) {
         res.json(err);
       } else {
-        res.json(`New user ${username} created!`);
+        res.json(`Survey submitted by ${username} for ${surveyID}`);
       }
     }
   );
@@ -66,5 +69,11 @@ router.post("/createAnswer/:surveyId/:qId/:uId", async (req, res) => {
     }
   );
 });
+
+// //route to get list of submission by surveyID
+// router.get('/getSubmission/:surveyId', (req,res) => {
+//   const surveyID = req.params.surveyId;
+
+// })
 
 module.exports = router;

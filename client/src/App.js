@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Homepage from "./components/Homepage";
 import Admin from "./components/Admin/Admin";
 import NewSurvey from "./components/Admin/NewSurvey";
+import ViewSubmission from "./components/Admin/ViewSubmission";
 
 import User from "./components/User/User";
 
@@ -25,6 +26,10 @@ function App() {
               <Route path="/" element={<Homepage />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/newsurvey" element={<NewSurvey />} />
+              <Route
+                path="/admin/viewsurvey/:id"
+                element={<ViewSubmission />}
+              />
 
               <Route path="/user" element={<User />} />
             </Routes>
