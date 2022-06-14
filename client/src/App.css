@@ -4,6 +4,10 @@
   text-align: center;
 }
 
+body{
+  font-family: Helvetica, sans-serif;
+}
+
 .survey-list{
   grid-auto-columns: max-content;
   grid-auto-rows: auto;
@@ -15,10 +19,8 @@
   justify-content: space-between;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.newsurvey-h{
+  justify-content: space-between;
 }
 
 .App-header {

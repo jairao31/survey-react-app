@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Stack } from "react-bootstrap";
 import Navigate from "../Navigate";
 
 const NewSurvey = () => {
   const [surveyID, setSurveyID] = useState("");
   const [surveyName, setSurveyName] = useState("");
   const [surveyDesc, setSurveyDesc] = useState("");
-  console.log(surveyID, surveyName, surveyDesc);
+
   return (
     <Container>
       <Navigate />
-      <h2>New Survey</h2>
-
-      <div>
-        <div className="survey-details">
+      <Stack className="newsurvey-h" direction="horizontal">
+        <h2>New Survey</h2>
+        <div className="ms-auto">
+          <Button>✚ MCQ Question</Button> <Button>✚ Likert Question</Button>{" "}
+          <Button>✚ Inventory Question</Button>
+        </div>
+      </Stack>
+      <br />
+      <Stack direction="horizontal" gap={3}>
+        <div>
           <Form>
             <Form.Group className="mb-3" controlId="survey-id">
               <Form.Control
@@ -38,7 +44,7 @@ const NewSurvey = () => {
               <Form.Control
                 as="textarea"
                 placeholder="Survey Description"
-                rows={3}
+                rows={5}
                 onChange={(e) => {
                   setSurveyDesc(e.target.value);
                 }}
@@ -46,13 +52,11 @@ const NewSurvey = () => {
             </Form.Group>
           </Form>
         </div>
-        <br />
-        <div>
-          <Button>✚ MCQ Question</Button> <Button>✚ Inventory Question</Button>{" "}
-          <Button>✚ Likert Question</Button>
-        </div>
-        <br />
-      </div>
+        <div className="vr" />
+        <Stack>
+          <div className="q-div">question here</div>
+        </Stack>
+      </Stack>
     </Container>
   );
 };
