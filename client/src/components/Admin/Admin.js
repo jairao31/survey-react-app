@@ -41,7 +41,7 @@ const Admin = () => {
             navigate("/admin/newsurvey");
           }}
         >
-          New Survey
+          ✚ New Survey
         </Button>
       </div>
 

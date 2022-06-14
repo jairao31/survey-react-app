@@ -5,6 +5,8 @@ import Navigate from "../Navigate";
 
 const NewSurvey = () => {
   const [surveyID, setSurveyID] = useState("");
+  const [surveyName, setSurveyName] = useState("");
+  const [surveyDesc, setSurveyDesc] = useState("");
   return (
     <Container>
       <Navigate />
@@ -30,8 +32,8 @@ const NewSurvey = () => {
         </div>
         <br />
         <div>
-          <Button>+ MCQ Question</Button> <Button>+ Inventory Question</Button>{" "}
-          <Button>+ Likert Question</Button>
+          <Button>✚ MCQ Question</Button> <Button>✚ Inventory Question</Button>{" "}
+          <Button>✚ Likert Question</Button>
         </div>
         <br />
       </div>
