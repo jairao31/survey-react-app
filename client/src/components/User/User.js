@@ -3,7 +3,8 @@ import React from "react";
 const User = () => {
   return (
     <div>
-      <input placeholder="Enter survey number"></input>
+      <h2>Welcome to User page</h2>
+      <input placeholder="Enter Survey ID"></input>
       <button>New Survey</button>
     </div>
   );
