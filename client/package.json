@@ -13,6 +13,8 @@
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.1",
+    "survey-creator-core": "^1.9.35",
+    "survey-creator-react": "^1.9.35",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
