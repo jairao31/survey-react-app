@@ -2,11 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Row, Col, Stack } from "react-bootstrap";
 import Navigate from "../Navigate";
+import MCQ from "./MCQ";
 
 const NewSurvey = () => {
   const [surveyID, setSurveyID] = useState("");
   const [surveyName, setSurveyName] = useState("");
   const [surveyDesc, setSurveyDesc] = useState("");
+
+  const [mcq, setMCQ] = useState(false);
+
+  const inventoryOpt = ["A Novice", "A Practitioner", "An Expert", "A Leader"];
+  const likertOpt = [
+    "Not At All Like Me",
+    "Not Very Like Me",
+    "A Little Like Me",
+    "Somewhat Like Me",
+    "Very Like Me",
+  ];
 
   return (
     <Container>
@@ -14,7 +26,14 @@ const NewSurvey = () => {
       <Stack className="newsurvey-h" direction="horizontal">
         <h2>New Survey</h2>
         <div className="ms-auto">
-          <Button>✚ MCQ Question</Button> <Button>✚ Likert Question</Button>{" "}
+          <Button
+            onClick={() => {
+              setMCQ(true);
+            }}
+          >
+            ✚ MCQ Question
+          </Button>{" "}
+          <Button>✚ Likert Question</Button>{" "}
           <Button>✚ Inventory Question</Button>
         </div>
       </Stack>
@@ -54,7 +73,13 @@ const NewSurvey = () => {
         </div>
         <div className="vr" />
         <Stack>
-          <div className="q-div">question here</div>
+          {mcq ? (
+            <div className="q-div">
+              <MCQ />
+            </div>
+          ) : (
+            <></>
+          )}
         </Stack>
       </Stack>
     </Container>
