@@ -8,9 +8,7 @@ const NewSurvey = () => {
   const [surveyID, setSurveyID] = useState("");
   const [surveyName, setSurveyName] = useState("");
   const [surveyDesc, setSurveyDesc] = useState("");
-
   const [mcq, setMCQ] = useState(false);
-
   const inventoryOpt = ["A Novice", "A Practitioner", "An Expert", "A Leader"];
   const likertOpt = [
     "Not At All Like Me",
@@ -19,7 +17,6 @@ const NewSurvey = () => {
     "Somewhat Like Me",
     "Very Like Me",
   ];
-
   return (
     <Container>
       <Navigate />

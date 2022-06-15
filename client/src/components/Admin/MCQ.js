@@ -1,72 +1,71 @@
-import React from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+// import React, { useState } from "react";
+// // import QuestionForm from "./QuestionForm";
+// import styled from "styled-components";
+// import { Container, Form, Button, Row, Col, Stack } from "react-bootstrap";
 
-const MCQ = () => {
-  return (
-    <div>
-      <Form>
-        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-          <Form.Label column sm={2}>
-            Question
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control type="email" placeholder="Email" />
-          </Col>
-        </Form.Group>
+// export default function SurveyQuestion({
+//   question,
+//   setQuestion,
+//   removeQuestion,
+//   moveQuestionUp,
+//   moveQuestionDown,
+// }) {
+//   const [editing, setEditing] = useState(false);
 
-        <Form.Group
-          as={Row}
-          className="mb-3"
-          controlId="formHorizontalPassword"
-        >
-          <Form.Label column sm={2}>
-            Password
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control type="password" placeholder="Password" />
-          </Col>
-        </Form.Group>
-        <fieldset>
-          <Form.Group as={Row} className="mb-3">
-            <Form.Label as="legend" column sm={2}>
-              Radios
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Check
-                type="radio"
-                label="first radio"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios1"
-              />
-              <Form.Check
-                type="radio"
-                label="second radio"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios2"
-              />
-              <Form.Check
-                type="radio"
-                label="third radio"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios3"
-              />
-            </Col>
-          </Form.Group>
-        </fieldset>
-        <Form.Group as={Row} className="mb-3" controlId="formHorizontalCheck">
-          <Col sm={{ span: 10, offset: 2 }}>
-            <Form.Check label="Remember me" />
-          </Col>
-        </Form.Group>
+//   function toggleEditing() {
+//     setEditing(!editing);
+//   }
 
-        <Form.Group as={Row} className="mb-3">
-          <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">Sign in</Button>
-          </Col>
-        </Form.Group>
-      </Form>
-    </div>
-  );
-};
+//   return (
+//     <Container className="bg-light border mx-auto">
+//       <Stack>
+//         {editing ? (
+//           // <QuestionForm question={question} setQuestion={setQuestion} />
+//         ) : (
+//           <>
+//             <Stack direction="horizontal">
+//               <div>
+//                 <h5>{question.text}</h5>
+//               </div>
+//               <div className="ms-auto">
+//                 <Button onClick={toggleEditing}>
+//                   {editing ? <>Save</> : <>Edit</>}
+//                 </Button>{" "}
+//                 <Button onClick={removeQuestion}>Delete</Button>{" "}
+//                 <Button onClick={moveQuestionUp}>▲</Button>{" "}
+//                 <Button onClick={moveQuestionDown}>▼</Button>{" "}
+//               </div>
+//             </Stack>
+//             <p>Type: {question.inputType}</p>
+//             {question.hasOptions ? (
+//               question.options.map((option, i) => (
+//                 <label key={i}>
+//                   <input
+//                     type={question.inputType}
+//                     id={option}
+//                     name={option}
+//                     value={option}
+//                     disabled
+//                   />
+//                   {option}
+//                 </label>
+//               ))
+//             ) : (
+//               <textarea disabled />
+//             )}
+//           </>
+//         )}
+//       </Stack>
+//     </Container>
+//   );
+// }
 
-export default MCQ;
+// const QuestionField = styled.li`
+//   margin-top: 1em;
+//   border-top: #ddd solid 1.5px
+//   padding-bottom: 1.5em;
+// `;
+
+// const Button = styled.button`
+//   margin: 0.3em;
+// `;
