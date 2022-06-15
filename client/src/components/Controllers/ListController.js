@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as helpers from "../Helpers/ArrayHelpers";
 
 export default class ListController {
@@ -26,5 +27,30 @@ export default class ListController {
   moveDown(index) {
     let newIndex = index === this.array.length - 1 ? index : index + 1;
     this.callback(helpers.move(this.array, index, newIndex));
+  }
+
+  async create(survey) {
+    try {
+      let surveyDone = await axios.post(
+        `http://localhost:3001/admin/createSurvey`,
+        survey
+      );
+      if (surveyDone) {
+        await this.array.forEach(async (i) => {
+          await axios.post(
+            `http://localhost:3001/admin/createQuestion/${survey.surveyId}`,
+            {
+              question: i.text,
+              type: i.type,
+              options: i.options,
+            }
+          );
+        });
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 }

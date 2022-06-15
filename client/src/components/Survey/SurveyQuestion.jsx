@@ -18,44 +18,42 @@ export default function SurveyQuestion({
 
   return (
     <Container className="bg-light border mx-auto">
-      <Stack></Stack>
-      <Form>
-        {editing ? (
-          <QuestionForm question={question} setQuestion={setQuestion} />
-        ) : (
-          <>
-            <Stack>
-              <div>
-                <h5>Question: {question.text}</h5>
-              </div>
-            </Stack>
-            <p>{question.inputType}</p>
-            {question.hasOptions ? (
-              question.options.map((option, i) => (
-                <Stack key={i}>
-                  <input
-                    type={question.inputType}
-                    id={option}
-                    name={option}
-                    value={option}
-                    disabled
-                  />
-                  {option}
-                </Stack>
-              ))
-            ) : (
-              <textarea disabled />
-            )}
-          </>
-        )}
-        <br />
-        <Button onClick={toggleEditing}>
-          {editing ? <>Save</> : <>Edit</>}
-        </Button>{" "}
-        <Button onClick={removeQuestion}>Delete</Button>{" "}
-        <Button onClick={moveQuestionUp}>▲</Button>{" "}
-        <Button onClick={moveQuestionDown}>▼</Button>{" "}
-      </Form>
+      <Stack gap={2}>
+        <Form>
+          {editing ? (
+            <QuestionForm question={question} setQuestion={setQuestion} />
+          ) : (
+            <>
+              <Stack>
+                <div>
+                  <h5>{question.text}</h5>
+                </div>
+              </Stack>
+              <p>{question.inputType}</p>
+              {question.hasOptions &&
+                question.options.map((option, i) => (
+                  <Stack key={i}>
+                    <input
+                      type={question.inputType}
+                      id={option}
+                      name={option}
+                      value={option}
+                      disabled
+                    />
+                    {option}
+                  </Stack>
+                ))}
+            </>
+          )}
+          <br />
+          <Button onClick={toggleEditing}>
+            {editing ? <>Save</> : <>Edit</>}
+          </Button>{" "}
+          <Button onClick={removeQuestion}>Delete</Button>{" "}
+          <Button onClick={moveQuestionUp}>▲</Button>{" "}
+          <Button onClick={moveQuestionDown}>▼</Button>{" "}
+        </Form>
+      </Stack>
     </Container>
   );
 }

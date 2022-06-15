@@ -1,13 +1,13 @@
 export default class Question {
   static TYPES = Object.freeze({
-    SINGLE: "Options: Pick One",
-    MULTIPLE: "Options: Pick Any Number",
-    TEXT: "Short Answer",
+    Likert: "Likert",
+    Inventory: "Inventory",
+    Multiple: "Multiple",
   });
 
   static DEFAULTS = Object.freeze({
     text: "New Question",
-    type: Question.TYPES.SINGLE,
+    type: Question.TYPES.Likert,
     options: [],
   });
 
@@ -20,15 +20,16 @@ export default class Question {
   }
 
   get hasOptions() {
-    return (
-      this.type === Question.TYPES.SINGLE ||
-      this.type === Question.TYPES.MULTIPLE
-    );
+    return true;
   }
 
   get inputType() {
-    if (this.type === Question.TYPES.SINGLE) return "radio";
-    if (this.type === Question.TYPES.MULTIPLE) return "checkbox";
+    if (
+      this.type === Question.TYPES.Likert ||
+      this.type === Question.TYPES.Inventory
+    )
+      return "radio";
+    if (this.type === Question.TYPES.Multiple) return "checkbox";
     throw new Error("This question does not have an input type.");
   }
 

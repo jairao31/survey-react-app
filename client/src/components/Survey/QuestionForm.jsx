@@ -70,7 +70,10 @@ export default function QuestionForm({ question, setQuestion }) {
               </Form.Group>
             ))}
             <p>
-              <Button onClick={() => listController.add("")}>
+              <Button
+                disabled={!question.hasOptions}
+                onClick={() => listController.add("")}
+              >
                 ✚ Add Option
               </Button>
             </p>

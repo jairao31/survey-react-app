@@ -8,6 +8,7 @@ import ListController from "../Controllers/ListController";
 import { Container, Form, Button, Row, Col, Stack } from "react-bootstrap";
 
 import Navigate from "../Navigate";
+import { useNavigate } from "react-router-dom";
 
 export default function SurveyBuilder() {
   //   const [title, handleChangeTitle] = useInputValue("New Survey");
@@ -21,6 +22,8 @@ export default function SurveyBuilder() {
   // }),
 
   const listController = new ListController(questions, setQuestions);
+
+  let navigate = useNavigate();
 
   return (
     <Container>
@@ -36,7 +39,24 @@ export default function SurveyBuilder() {
         </div>
         <div className="vr" />
         <div>
-          <Button>Create Survey</Button>
+          <Button
+            variant="success"
+            onClick={async () => {
+              const result = await listController.create({
+                surveyId: surveyID,
+                name: surveyName,
+                desc: surveyDesc,
+              });
+              if (result) {
+                alert("survey created");
+                navigate("/admin", { replace: false });
+              } else {
+                alert("survey could not be created");
+              }
+            }}
+          >
+            Create Survey
+          </Button>
         </div>
       </Stack>
       <br />
@@ -77,42 +97,20 @@ export default function SurveyBuilder() {
         <Stack>
           <ol>
             {questions.map((question, i) => (
-              <SurveyQuestion
-                key={question.id}
-                question={question}
-                setQuestion={(question) => listController.set(i, question)}
-                removeQuestion={() => listController.remove(i)}
-                moveQuestionUp={() => listController.moveUp(i)}
-                moveQuestionDown={() => listController.moveDown(i)}
-              />
+              <li>
+                <SurveyQuestion
+                  key={question.id}
+                  question={question}
+                  setQuestion={(question) => listController.set(i, question)}
+                  removeQuestion={() => listController.remove(i)}
+                  moveQuestionUp={() => listController.moveUp(i)}
+                  moveQuestionDown={() => listController.moveDown(i)}
+                />
+              </li>
             ))}
           </ol>
         </Stack>
       </Stack>
-      {/* <div className="small-container"> */}
-      {/* <SurveyDetails
-          // title={title} handleChangeTitle={handleChangeTitle}
-          surveyID={surveyID}
-          setSurveyID={setSurveyID}
-          surveyName={surveyName}
-          setSurveyName={setSurveyName}
-          surveyDesc={surveyDesc}
-          setSurveyDesc={setSurveyDesc}
-        /> */}
-
-      {/* <ol>
-          {questions.map((question, i) => (
-            <SurveyQuestion
-              key={question.id}
-              question={question}
-              setQuestion={(question) => listController.set(i, question)}
-              removeQuestion={() => listController.remove(i)}
-              moveQuestionUp={() => listController.moveUp(i)}
-              moveQuestionDown={() => listController.moveDown(i)}
-            />
-          ))}
-        </ol> */}
-      {/* </div> */}
     </Container>
   );
 }
