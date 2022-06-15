@@ -50,15 +50,26 @@ router.post("/createSurvey", (req, res) => {
 router.post("/createQuestion/:surveyId", (req, res) => {
   const surveyID = req.params.surveyId;
   const reqData = req.body;
-  const { question, type } = reqData;
+  const { question, type, options } = reqData;
   const qId = v4();
   db.query(
     "INSERT INTO questions (qId, question, type, surveyId) VALUES (?,?,?,?)",
     [qId, question, type, surveyID],
-    (err, result) => {
+    async (err, result) => {
       if (err) {
         res.json(err);
       } else {
+        await options.forEach(async (i) => {
+          await db.query(
+            "INSERT INTO questionChoices (cId, cQuestion, questionId, surveyId) VALUES (?,?,?,?)",
+            [v4(), i, qId, surveyID],
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
+        });
         res.json(`New question added for ${surveyID}`);
       }
     }
@@ -66,24 +77,24 @@ router.post("/createQuestion/:surveyId", (req, res) => {
 });
 
 //route to create question choice
-router.post("/createQuestionChoice/:surveyId/:qId", (req, res) => {
-  const surveyID = req.params.surveyId;
-  const qID = req.params.qId;
-  const reqData = req.body;
-  const { cQuestion } = reqData;
-  const cId = v4();
-  db.query(
-    "INSERT INTO questionChoices (cId, cQuestion, questionId, surveyId) VALUES (?,?,?,?)",
-    [cId, cQuestion, qID, surveyID],
-    (err, result) => {
-      if (err) {
-        res.json(err);
-      } else {
-        res.json(`New question choice added for ${qID}`);
-      }
-    }
-  );
-});
+// router.post("/createQuestionChoice/:surveyId/:qId", (req, res) => {
+//   const surveyID = req.params.surveyId;
+//   const qID = req.params.qId;
+//   const reqData = req.body;
+//   const { cQuestion } = reqData;
+//   const cId = v4();
+//   db.query(
+//     "INSERT INTO questionChoices (cId, cQuestion, questionId, surveyId) VALUES (?,?,?,?)",
+//     [cId, cQuestion, qID, surveyID],
+//     (err, result) => {
+//       if (err) {
+//         res.json(err);
+//       } else {
+//         res.json(`New question choice added for ${qID}`);
+//       }
+//     }
+//   );
+// });
 
 //route to get all question
 router.get("/getAllQuestions/:surveyId", (req, res) => {
@@ -91,12 +102,12 @@ router.get("/getAllQuestions/:surveyId", (req, res) => {
   db.query(
     "SELECT * FROM questions WHERE surveyId = ?",
     surveyID,
-    (err, result) => {
+    async (err, result) => {
       if (err) {
         res.json(err);
       } else {
         let arr = [];
-        result.forEach((el) => {
+        await result.forEach(async (el) => {
           let ob = {};
           ob["qId"] = el.qId;
           ob["question"] = el.question;
