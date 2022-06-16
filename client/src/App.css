@@ -5,7 +5,37 @@
 } */
 
 body{
-  font-family: Helvetica, sans-serif;
+  font-family: Courier, Helvetica, sans-serif;
+}
+
+.user-page{
+  display: flex;
+}
+
+.q-body{
+  border-spacing: 5px;
+}
+
+.q-main{
+  justify-content: space-between;
+  border:  1px solid grey;
+  border-radius: 15px;
+  
+}
+
+.q-type{
+  display: flex;
+  justify-content: space-between;
+}
+
+.q-heading{
+  justify-content: space-between;
+}
+
+
+
+.q-sub{
+  width: 55%;
 }
 
 /* .survey-list{
@@ -23,7 +53,7 @@ body{
   justify-content: space-between;
 } */
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -32,12 +62,12 @@ body{
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 /* .App-link {
   color: #61dafb;
 } */
-@import url("https://taniarascia.github.io/primitive/css/main.css");
+/* @import url("https://taniarascia.github.io/primitive/css/main.css");
 
 .icon {
   margin-right: 0.5em;
@@ -50,4 +80,4 @@ body{
   to {
     transform: rotate(360deg);
   }
-}
+} */

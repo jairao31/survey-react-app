@@ -3,24 +3,29 @@ import {
   Container,
   Stack,
   Button,
-  InputGroup,
+  Badge,
   FormControl,
+  Card,
+  Form,
 } from "react-bootstrap";
 import Navigate from "../Navigate";
-
 
 import axios from "axios";
 
 const User = () => {
   const [surveyID, getSurveyID] = useState("");
   const [sID, setSID] = useState("");
+  // const [surveyDetails, setSurveyDetails] = useState([]);
   const [surveyName, setSurveyName] = useState("");
   const [surveyDesc, setSurveyDesc] = useState("");
 
   const [allQ, setAllQ] = useState([]);
-  const [currentQ, setCurrentQ] = useState(null);
-  const [currentChoices, setCurrentChoices] = useState([]);
-  const [qNum, setQNum] = useState(0);
+  const [allQC, setAllQC] = useState({});
+
+  const [username, setUsername] = useState("");
+  // const [currentQ, setCurrentQ] = useState(null);
+  // const [currentChoices, setCurrentChoices] = useState([]);
+  // const [qNum, setQNum] = useState(0);
 
   const inventoryOpt = ["A Novice", "A Practitioner", "An Expert", "A Leader"];
   const likertOpt = [
@@ -46,11 +51,37 @@ const User = () => {
       const sData = await axios.get(
         `http://localhost:3001/admin/getSurveyDetailsByID/${id}`
       );
-      setSurveyName(sData.data.name);
-      setSurveyDesc(sData.data.description);
+      // setSurveyDetails(sData.data);
+      setSurveyName(sData.data[0].name);
+      setSurveyDesc(sData.data[0].description);
     };
     getSurveyDetails(sID);
   }, [sID]);
+
+  useEffect(() => {
+    if (allQ.length === 0) return;
+
+    const getAllQCs = async (sid, qid) => {
+      const { data } = await axios.get(
+        `http://localhost:3001/admin/getAllQchoices/${sid}/${qid}`
+      );
+      return data;
+    };
+
+    allQ.forEach(async (el) => {
+      let data = await getAllQCs(sID, el.qId);
+      setAllQC((prev) => {
+        return {
+          ...prev,
+          [el.qId]: data,
+        };
+      });
+    });
+  }, [allQ]);
+
+  // useEffect(() => {
+  //   console.log("qc: ", allQC);
+  // }, [allQC]);
 
   // useEffect(() => {
   //   // if (!surveyName || surveyName.trim().length === 0 || !surveyDesc || surveyDesc.trim().length === 0) return;
@@ -78,16 +109,30 @@ const User = () => {
 
   // const getSurveyDetails = (id) => {};
 
-  console.log(surveyName);
+  // console.log(surveyName);
+  // console.log(allQ);
+  // console.log(surveyDetails[0].name);
+  // console.log(surveyName, surveyDesc);
+
   console.log(allQ);
+  // console.log(allQC);
 
   return (
     <Container>
       <Navigate />
       <Stack className="newsurvey-h" direction="horizontal">
-        <h2>User page</h2>
+        <div>
+          <FormControl
+            placeholder="Enter Username"
+            aria-label="Enter Username"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+        </div>
+
         <div className="ms-auto">
-          <InputGroup className="mb-3">
+          <Stack direction="horizontal">
             <FormControl
               placeholder="Enter Survey ID"
               aria-label="Enter Survey ID"
@@ -100,26 +145,79 @@ const User = () => {
               variant="primary"
               id="button-addon2"
               onClick={(e) => {
-                e.preventDefault();
-                setSID(surveyID);
-                getSurveyID("");
+                if (!username) {
+                  alert("Please enter username!");
+                } else {
+                  e.preventDefault();
+                  setSID(surveyID);
+                  getSurveyID("");
+                }
               }}
             >
-              Take a survey
+              Attempt
             </Button>
-          </InputGroup>
+          </Stack>
         </div>
       </Stack>
       <br />
-      <Stack direction="horizontal">
-        <Stack>
-          <h3>Survey Name: {surveyName}</h3>
-          <h5>Survey ID: {sID}</h5>
-          <p>Description: {surveyDesc}</p>
-        </Stack>
-      </Stack>
+      <div className="user-page">
+        <div className="w-25 fixed">
+          {surveyName && surveyDesc ? (
+            <Stack>
+              <h6>You are attempting the survey:</h6>
+              <Card style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title>{surveyName}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    {sID}
+                  </Card.Subtitle>
+                  <Card.Text>{surveyDesc}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Stack>
+          ) : (
+            <></>
+          )}
+        </div>
 
-      {currentQ && (
+        <Stack direction="horizontal">
+          <div>
+            <br />
+            <Stack>
+              <ol>
+                <div className="q-body">
+                  {allQ.map((q) => (
+                    <div className="q-main">
+                      <li>
+                        <Stack>
+                          <div className="q-type">
+                            <label>{q.question}</label>
+                            <Badge pill bg="secondary">
+                              {q.type}
+                            </Badge>
+                          </div>
+                          <br />
+                          <div className="q-sub">
+                            <ol type="a">
+                              {allQC[q.qId]?.map((qc) => (
+                                <li>{qc.cQuestion}</li>
+                              ))}
+                            </ol>
+                          </div>
+
+                          <br />
+                        </Stack>
+                      </li>
+                    </div>
+                  ))}
+                </div>
+              </ol>
+            </Stack>
+          </div>
+          {/* <Button>Submit</Button> */}
+        </Stack>
+      </div>
+      {/*{currentQ && (
         <div>
           <p>{currentQ.question}</p>
           {(currentQ.type === "Likert" || currentQ.type === "Inventory") && (
@@ -160,9 +258,9 @@ const User = () => {
         {qNum !== allQ.length - 1 && (
           <button onClick={() => setQNum((prev) => prev + 1)}>Next</button>
         )}
-      </Stack>
+      </Stack> */}
     </Container>
   );
-};;;;;;;;;;;;;
+};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 export default User;

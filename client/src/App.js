@@ -7,7 +7,7 @@ import Admin from "./components/Admin/Admin";
 import NewSurvey from "./components/Admin/NewSurvey";
 import SurveyBuilder from "./components/Survey/SurveyBuilder";
 import ViewSubmission from "./components/Admin/ViewSubmission";
-// import "./App.css";
+import "./App.css";
 
 import Multiple from "./components/QuestionType/Multiple";
 
