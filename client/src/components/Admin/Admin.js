@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Card, Stack, FormControl, Button } from "react-bootstrap";
+import { Container, Card, Stack, FormLabel, Button } from "react-bootstrap";
 import Navigate from "../Navigate";
 
 import Axios from "axios";
@@ -36,7 +36,7 @@ const Admin = () => {
       <Navigate />
       <Stack direction="horizontal" gap={3}>
         <div>
-          <h2>Admin page</h2>
+          <FormLabel>Admin page</FormLabel>
         </div>
         <div className="ms-auto">
           <Button

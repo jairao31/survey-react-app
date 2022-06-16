@@ -7,6 +7,8 @@ import {
   FormControl,
   Card,
   Form,
+  FormLabel,
+  InputGroup,
 } from "react-bootstrap";
 import Navigate from "../Navigate";
 
@@ -114,26 +116,28 @@ const User = () => {
   // console.log(surveyDetails[0].name);
   // console.log(surveyName, surveyDesc);
 
-  console.log(allQ);
+  // console.log(allQ);
   // console.log(allQC);
 
   return (
     <Container>
       <Navigate />
       <Stack className="newsurvey-h" direction="horizontal">
-        <div>
-          <FormControl
-            placeholder="Enter Username"
-            aria-label="Enter Username"
+        {/* <div className="u-input"> */}
+        <InputGroup className="u-input">
+          <InputGroup.Text id="basic-addon1">Username</InputGroup.Text>
+          <Form.Control
+            placeholder="enter here!"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
             onChange={(e) => {
               setUsername(e.target.value);
             }}
           />
-        </div>
-
+        </InputGroup>
         <div className="ms-auto">
-          <Stack direction="horizontal">
-            <FormControl
+          <InputGroup>
+            <Form.Control
               placeholder="Enter Survey ID"
               aria-label="Enter Survey ID"
               onChange={(e) => {
@@ -142,8 +146,7 @@ const User = () => {
               value={surveyID}
             />
             <Button
-              variant="primary"
-              id="button-addon2"
+              variant="outline-secondary"
               onClick={(e) => {
                 if (!username) {
                   alert("Please enter username!");
@@ -156,7 +159,20 @@ const User = () => {
             >
               Attempt
             </Button>
-          </Stack>
+            <Button
+              variant="outline-secondary"
+              onClick={() => {
+                setSID("");
+                getSurveyID("");
+                setSurveyName("");
+                setSurveyDesc("");
+                setAllQ([]);
+                setAllQC([]);
+              }}
+            >
+              X
+            </Button>
+          </InputGroup>
         </div>
       </Stack>
       <br />
@@ -214,10 +230,55 @@ const User = () => {
               </ol>
             </Stack>
           </div>
-          {/* <Button>Submit</Button> */}
         </Stack>
       </div>
-      {/*{currentQ && (
+      {surveyName && surveyDesc ? (
+        <Button className="b-survey">Submit</Button>
+      ) : (
+        <></>
+      )}
+
+      <br />
+      <br />
+    </Container>
+  );
+};
+
+export default User;
+
+{
+  /* <div className="ms-auto">
+          <Stack direction="horizontal" gap={1}>
+            <FormControl
+              placeholder="Enter Survey ID"
+              aria-label="Enter Survey ID"
+              onChange={(e) => {
+                getSurveyID(e.target.value);
+              }}
+              value={surveyID}
+            />
+            <Button
+              variant="primary"
+              id="button-addon2"
+              onClick={(e) => {
+                if (!username) {
+                  alert("Please enter username!");
+                } else {
+                  e.preventDefault();
+                  setSID(surveyID);
+                  getSurveyID("");
+                }
+              }}
+            >
+              Attempt
+            </Button>
+            <br />
+          </Stack>
+        </div> */
+}
+
+{
+  /*{currentQ && (
         <div>
           <p>{currentQ.question}</p>
           {(currentQ.type === "Likert" || currentQ.type === "Inventory") && (
@@ -258,9 +319,5 @@ const User = () => {
         {qNum !== allQ.length - 1 && (
           <button onClick={() => setQNum((prev) => prev + 1)}>Next</button>
         )}
-      </Stack> */}
-    </Container>
-  );
-};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-export default User;
+      </Stack> */
+}

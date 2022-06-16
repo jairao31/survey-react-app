@@ -28,10 +28,39 @@ export default function SurveyBuilder() {
   return (
     <Container>
       <Navigate />
-      <Stack direction="horizontal" gap={3}>
+      {/* <Stack direction="horizontal" gap={3}>
         <div>
           <h2>New Survey</h2>
         </div>
+        <div className="ms-auto">
+          <Button onClick={() => listController.add(new Question())}>
+            ✚ Add Question
+          </Button>
+        </div>
+        <div className="vr" />
+        <div>
+          <Button
+            variant="success"
+            onClick={async () => {
+              const result = await listController.create({
+                surveyId: surveyID,
+                name: surveyName,
+                desc: surveyDesc,
+              });
+              if (result) {
+                alert(`Survey ${surveyID} created`);
+                navigate("/admin", { replace: false });
+              } else {
+                alert("survey could not be created");
+              }
+            }}
+          >
+            Create Survey
+          </Button>
+        </div>
+      </Stack> */}
+      <Stack direction="horizontal" gap={3}>
+        <h4>New Survey</h4>
         <div className="ms-auto">
           <Button onClick={() => listController.add(new Question())}>
             ✚ Add Question
