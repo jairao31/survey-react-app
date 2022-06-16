@@ -5,13 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Homepage from "./components/Homepage";
 import Admin from "./components/Admin/Admin";
 import NewSurvey from "./components/Admin/NewSurvey";
+import SurveyBuilder from "./components/Survey/SurveyBuilder";
 import ViewSubmission from "./components/Admin/ViewSubmission";
+import "./App.css";
+
+import Multiple from "./components/QuestionType/Multiple";
 
 import User from "./components/User/User";
 
 function App() {
-  // return <div className="App">This is homepage</div>;
-
   return (
     <Container>
       <div className="App">
@@ -25,13 +27,15 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/admin" element={<Admin />} />
-              <Route path="/admin/newsurvey" element={<NewSurvey />} />
+              <Route path="/admin/newsurvey" element={<SurveyBuilder />} />
               <Route
                 path="/admin/viewsurvey/:id"
                 element={<ViewSubmission />}
               />
 
               <Route path="/user" element={<User />} />
+
+              <Route path="/multiple" element={<Multiple />} />
             </Routes>
           </div>
         </Router>

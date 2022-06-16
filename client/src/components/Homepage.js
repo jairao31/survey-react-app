@@ -10,7 +10,7 @@ const Homepage = () => {
   return (
     <Container>
       <Navigate />
-      <h1>Welcome to Online Survey Maker 😄</h1>
+      <h1>Welcome to Build-A-Survey 😄</h1>
       <br />
       <div className="homepage">
         <Stack className="col-md-6 mx-auto">
