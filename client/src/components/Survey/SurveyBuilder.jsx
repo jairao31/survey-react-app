@@ -89,8 +89,9 @@ export default function SurveyBuilder() {
         </div>
       </Stack>
       <br />
-      <Stack direction="horizontal">
-        <div className="w-25 p-3 fixed">
+      {/* ////////////// */}
+      <div className="newsurvey-page">
+        <div className="w-50 fixed">
           <Form>
             <Form.Group className="mb-3" controlId="survey-id">
               <Form.Control
@@ -121,9 +122,69 @@ export default function SurveyBuilder() {
               />
             </Form.Group>
           </Form>
+          <br />
+          <br />
         </div>
-        <div className="vr" />
-        <Stack>
+
+        <div className="survey-b">
+          <Stack>
+            <ol>
+              {questions.map((question, i) => (
+                <li>
+                  <div className="survey-main">
+                    <SurveyQuestion
+                      key={question.id}
+                      question={question}
+                      setQuestion={(question) =>
+                        listController.set(i, question)
+                      }
+                      removeQuestion={() => listController.remove(i)}
+                      moveQuestionUp={() => listController.moveUp(i)}
+                      moveQuestionDown={() => listController.moveDown(i)}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Stack>
+        </div>
+      </div>
+
+      {/* <Stack direction="horizontal"> */}
+      {/* <div className="w-25 p-3 fixed">
+          <Form>
+            <Form.Group className="mb-3" controlId="survey-id">
+              <Form.Control
+                type="text"
+                placeholder="Survey ID"
+                onChange={(e) => {
+                  setSurveyID(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="survey-name">
+              <Form.Control
+                type="text"
+                placeholder="Survey Name"
+                onChange={(e) => {
+                  setSurveyName(e.target.value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="survey-desc">
+              <Form.Control
+                as="textarea"
+                placeholder="Survey Description"
+                rows={5}
+                onChange={(e) => {
+                  setSurveyDesc(e.target.value);
+                }}
+              />
+            </Form.Group>
+          </Form>
+        </div> */}
+      {/* <div className="vr" /> */}
+      {/* <Stack>
           <ol>
             {questions.map((question, i) => (
               <li>
@@ -138,8 +199,10 @@ export default function SurveyBuilder() {
               </li>
             ))}
           </ol>
-        </Stack>
-      </Stack>
+        </Stack> */}
+      {/* </Stack> */}
+      <br />
+      <br />
     </Container>
   );
 }

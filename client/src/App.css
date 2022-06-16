@@ -10,25 +10,57 @@ body{
 
 .user-page{
   display: flex;
+  width: 100%;
+}
+
+.newsurvey-page{
+  display: flex;
 }
 
 .u-input{
   /* display: flex; */
-  width: 25%;
+  width: 7.6cm;
+}
+
+.survey-b{
+  width: 100%;
+  float: right;
+  padding-left: 20px;
 }
 
 .q-body{
   border-spacing: 5px;
+  width: 100%;
+  float: right;
+  padding-left: 0px;
+  padding-right: 0px;
+  
 }
 
+.survey-main{
+  justify-content: space-between;
+  border:  1px solid grey;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
 .q-main{
   justify-content: space-between;
   border:  1px solid grey;
   border-radius: 15px;
   margin-bottom: 10px;
   padding: 10px;
+  /* padding-left: 20px; */
   
 }
+
+.qmain-body{
+  float: right;
+  margin-left: 10px;
+  width: 100%;
+}
+
+
 
 .q-type{
   display: flex;
@@ -40,11 +72,13 @@ body{
 }
 
 
+
+
 .q-sub{
   width: 55%;
 }
 
-.b-survey{
+.u-submit{
   float: right;
 }
 

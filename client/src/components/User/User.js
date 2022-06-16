@@ -146,7 +146,7 @@ const User = () => {
               value={surveyID}
             />
             <Button
-              variant="outline-secondary"
+              variant="outline-primary"
               onClick={(e) => {
                 if (!username) {
                   alert("Please enter username!");
@@ -160,7 +160,7 @@ const User = () => {
               Attempt
             </Button>
             <Button
-              variant="outline-secondary"
+              variant="outline-primary"
               onClick={() => {
                 setSID("");
                 getSurveyID("");
@@ -196,35 +196,36 @@ const User = () => {
           )}
         </div>
 
-        <Stack direction="horizontal">
-          <div>
-            <br />
+        <Stack direction="w-75 horizontal">
+          <div className="qmain-body">
             <Stack>
               <ol>
                 <div className="q-body">
                   {allQ.map((q) => (
-                    <div className="q-main">
-                      <li>
-                        <Stack>
-                          <div className="q-type">
-                            <label>{q.question}</label>
-                            <Badge pill bg="secondary">
-                              {q.type}
-                            </Badge>
-                          </div>
-                          <br />
-                          <div className="q-sub">
-                            <ol type="a">
-                              {allQC[q.qId]?.map((qc) => (
-                                <li>{qc.cQuestion}</li>
-                              ))}
-                            </ol>
-                          </div>
-
-                          <br />
-                        </Stack>
-                      </li>
-                    </div>
+                    <Container>
+                      <Stack className="q-main">
+                        <li>
+                          <Stack>
+                            <div className="q-type">
+                              <label>
+                                <b>{q.question}</b>
+                              </label>
+                              <Badge pill bg="secondary">
+                                {q.type}
+                              </Badge>
+                            </div>
+                            <br />
+                            <div className="q-sub">
+                              <ol type="a">
+                                {allQC[q.qId]?.map((qc) => (
+                                  <li>{qc.cQuestion}</li>
+                                ))}
+                              </ol>
+                            </div>
+                          </Stack>
+                        </li>
+                      </Stack>
+                    </Container>
                   ))}
                 </div>
               </ol>
@@ -232,14 +233,14 @@ const User = () => {
           </div>
         </Stack>
       </div>
-      {surveyName && surveyDesc ? (
-        <Button className="b-survey">Submit</Button>
-      ) : (
-        <></>
-      )}
-
-      <br />
-      <br />
+      <div className="u-submit">
+        {surveyName && surveyDesc ? (
+          <Button className="b-survey">Submit</Button>
+        ) : (
+          <></>
+        )}
+      </div>
+      <br /> <br /> <br />
     </Container>
   );
 };
