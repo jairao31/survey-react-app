@@ -14,6 +14,9 @@ import axios from "axios";
 const User = () => {
   const [surveyID, getSurveyID] = useState("");
   const [sID, setSID] = useState("");
+  const [surveyName, setSurveyName] = useState("");
+  const [surveyDesc, setSurveyDesc] = useState("");
+
   const [allQ, setAllQ] = useState([]);
   const [currentQ, setCurrentQ] = useState(null);
   const [currentChoices, setCurrentChoices] = useState([]);
@@ -38,21 +41,45 @@ const User = () => {
       setAllQ(data);
     };
     getSurvey(sID);
+
+    const getSurveyDetails = async (id) => {
+      const sData = await axios.get(
+        `http://localhost:3001/admin/getSurveyDetailsByID/${id}`
+      );
+      setSurveyName(sData.data.name);
+      setSurveyDesc(sData.data.description);
+    };
+    getSurveyDetails(sID);
   }, [sID]);
 
-  useEffect(() => {
-    if (allQ.length === 0) return;
-    const getQuestion = async () => {
-      const { data } = await axios.get(
-        `http://localhost:3001/admin/getAllQchoices/${allQ[qNum].surveyId}/${allQ[qNum].qId}`
-      );
-      setCurrentChoices(data);
-    };
-    setCurrentQ(allQ[qNum]);
-    getQuestion();
-  }, [qNum, allQ]);
+  // useEffect(() => {
+  //   // if (!surveyName || surveyName.trim().length === 0 || !surveyDesc || surveyDesc.trim().length === 0) return;
+  //   if (!sID || sID.trim().length === 0) return;
+  //   const getSurveyDetails = async (id) => {
+  //     const { sData } = await axios.get(
+  //       `http://localhost:3001/admin/getSurveyDetailsByID/${id}`
+  //     );
+  //     setSurveyDetails(sData);
+  //   };
+  //   getSurveyDetails(sID);
+  // }, [sID]);
 
-  // console.log(sID);
+  // useEffect(() => {
+  //   if (allQ.length === 0) return;
+  //   const getQuestion = async () => {
+  //     const { data } = await axios.get(
+  //       `http://localhost:3001/admin/getAllQchoices/${allQ[qNum].surveyId}/${allQ[qNum].qId}`
+  //     );
+  //     setCurrentChoices(data);
+  //   };
+  //   setCurrentQ(allQ[qNum]);
+  //   getQuestion();
+  // }, [qNum, allQ]);
+
+  // const getSurveyDetails = (id) => {};
+
+  console.log(surveyName);
+  console.log(allQ);
 
   return (
     <Container>
@@ -84,7 +111,14 @@ const User = () => {
         </div>
       </Stack>
       <br />
-      <h2>Survey ID: {sID}</h2>
+      <Stack direction="horizontal">
+        <Stack>
+          <h3>Survey Name: {surveyName}</h3>
+          <h5>Survey ID: {sID}</h5>
+          <p>Description: {surveyDesc}</p>
+        </Stack>
+      </Stack>
+
       {currentQ && (
         <div>
           <p>{currentQ.question}</p>
@@ -129,6 +163,6 @@ const User = () => {
       </Stack>
     </Container>
   );
-};
+};;;;;;;;;;;;;
 
 export default User;

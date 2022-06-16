@@ -96,6 +96,19 @@ router.post("/createQuestion/:surveyId", (req, res) => {
 //   );
 // });
 
+//route to get survey details by id
+
+router.get('/getSurveyDetailsByID/:surveyId', (req,res) => {
+  const surveyID = req.params.surveyId;
+  db.query("SELECT id, name, description FROM surveyList", (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+})
+
 //route to get all question
 router.get("/getAllQuestions/:surveyId", (req, res) => {
   const surveyID = req.params.surveyId;
