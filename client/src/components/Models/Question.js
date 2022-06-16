@@ -28,7 +28,7 @@ export default class Question {
       this.type === Question.TYPES.Likert ||
       this.type === Question.TYPES.Inventory
     )
-      return "radio";
+      return "checkbox";
     if (this.type === Question.TYPES.Multiple) return "checkbox";
     throw new Error("This question does not have an input type.");
   }

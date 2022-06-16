@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Row, Col, Stack } from "react-bootstrap";
 import Navigate from "../Navigate";
-import MCQ from "./MCQ";
 
 const NewSurvey = () => {
   const [surveyID, setSurveyID] = useState("");
@@ -70,13 +69,7 @@ const NewSurvey = () => {
         </div>
         <div className="vr" />
         <Stack>
-          {mcq ? (
-            <div className="q-div">
-              <MCQ />
-            </div>
-          ) : (
-            <></>
-          )}
+          {mcq ? <div className="q-div">{/* <MCQ /> */}</div> : <></>}
         </Stack>
       </Stack>
     </Container>

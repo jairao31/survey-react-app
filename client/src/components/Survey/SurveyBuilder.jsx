@@ -48,7 +48,7 @@ export default function SurveyBuilder() {
                 desc: surveyDesc,
               });
               if (result) {
-                alert("survey created");
+                alert(`Survey ${surveyID} created`);
                 navigate("/admin", { replace: false });
               } else {
                 alert("survey could not be created");
@@ -61,7 +61,7 @@ export default function SurveyBuilder() {
       </Stack>
       <br />
       <Stack direction="horizontal">
-        <div className="w-25 p-3">
+        <div className="w-25 p-3 fixed">
           <Form>
             <Form.Group className="mb-3" controlId="survey-id">
               <Form.Control

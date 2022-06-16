@@ -8,7 +8,6 @@ import {
 } from "react-bootstrap";
 import Navigate from "../Navigate";
 
-
 import axios from "axios";
 
 const User = () => {
@@ -17,7 +16,7 @@ const User = () => {
   const [allQ, setAllQ] = useState([]);
   const [currentQ, setCurrentQ] = useState(null);
   const [currentChoices, setCurrentChoices] = useState([]);
-  const [qNum, setQNum] = useState(0);
+  // const [qNum, setQNum] = useState(0);
 
   const inventoryOpt = ["A Novice", "A Practitioner", "An Expert", "A Leader"];
   const likertOpt = [

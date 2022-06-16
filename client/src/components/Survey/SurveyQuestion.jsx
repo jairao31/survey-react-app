@@ -17,8 +17,9 @@ export default function SurveyQuestion({
   }
 
   return (
-    <Container className="bg-light border mx-auto">
-      <Stack gap={2}>
+    <Container className="border mx-5">
+      <br />
+      <Stack gap={3}>
         <Form>
           {editing ? (
             <QuestionForm question={question} setQuestion={setQuestion} />
@@ -26,22 +27,33 @@ export default function SurveyQuestion({
             <>
               <Stack>
                 <div>
-                  <h5>{question.text}</h5>
+                  {/* <h5></h5> */}
+                  <Form.Label>{question.text}</Form.Label>
                 </div>
               </Stack>
-              <p>{question.inputType}</p>
               {question.hasOptions &&
                 question.options.map((option, i) => (
-                  <Stack key={i}>
-                    <input
+                  // <Stack direction="horizontal" key={i}>
+                  //   <input
+                  //     type={question.inputType}
+                  //     id={option}
+                  //     name={option}
+                  //     value={option}
+                  //     disabled
+                  //   />
+
+                  //   {option}
+                  <Form.Group className="mb-3">
+                    <Form.Check
                       type={question.inputType}
                       id={option}
                       name={option}
                       value={option}
                       disabled
+                      label={option}
                     />
-                    {option}
-                  </Stack>
+                  </Form.Group>
+                  // </Stack>
                 ))}
             </>
           )}
@@ -54,16 +66,8 @@ export default function SurveyQuestion({
           <Button onClick={moveQuestionDown}>▼</Button>{" "}
         </Form>
       </Stack>
+      <br />
     </Container>
   );
 }
 
-// const QuestionField = styled.li`
-//   margin-top: 1em;
-//   border-top: #ddd solid 1.5px
-//   padding-bottom: 1.5em;
-// `;
-
-// const Button = styled.button`
-//   margin: 0.3em;
-// `;

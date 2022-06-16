@@ -9,6 +9,8 @@ import SurveyBuilder from "./components/Survey/SurveyBuilder";
 import ViewSubmission from "./components/Admin/ViewSubmission";
 // import "./App.css";
 
+import Multiple from "./components/QuestionType/Multiple";
+
 import User from "./components/User/User";
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
               />
 
               <Route path="/user" element={<User />} />
+
+              <Route path="/multiple" element={<Multiple />} />
             </Routes>
           </div>
         </Router>
