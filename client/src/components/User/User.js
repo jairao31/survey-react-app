@@ -260,13 +260,15 @@ const User = () => {
         <div className="w-25 fixed">
           {surveyName && surveyDesc ? (
             <Stack>
+              <br />
               <h6>You are attempting the survey:</h6>
               <Card style={{ width: "18rem" }}>
                 <Card.Body>
                   <Card.Title>{surveyName}</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    {sID}
+                    ID: "{sID}"
                   </Card.Subtitle>
+                  <br />
                   <Card.Text>{surveyDesc}</Card.Text>
                 </Card.Body>
               </Card>
@@ -278,6 +280,7 @@ const User = () => {
 
         <Stack direction="w-75 horizontal">
           <div className="qmain-body">
+            <br />
             <Stack>
               <ol>
                 <div className="q-body">
@@ -413,7 +416,7 @@ const User = () => {
               const result = handleSurveySubmit(sID);
               if (result) {
                 alert(
-                  `Survey ${surveyName} successfully submitted for ${username}`
+                  `Survey "${surveyName}" successfully submitted for username "${username}"`
                 );
                 setSID("");
                 getSurveyID("");
