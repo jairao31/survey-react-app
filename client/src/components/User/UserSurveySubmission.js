@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Container, ListGroup, Stack, Card } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  ListGroup,
+  Stack,
+  Card,
+  Badge,
+} from "react-bootstrap";
 import Navigate from "../Navigate";
 
 import axios from "axios";
@@ -11,6 +18,7 @@ const UserSurveySubmission = () => {
   const uID = data.uId;
 
   const [userName, setUserName] = useState("");
+  const [ans, setAns] = useState([]);
 
   const [surveyName, setSurveyName] = useState("");
   const [surveyDesc, setSurveyDesc] = useState("");
@@ -24,7 +32,7 @@ const UserSurveySubmission = () => {
         `http://localhost:3001/admin/getUsername/${uid}`
       );
       setUserName(userN.data[0].username);
-      //   console.log(userN.data[0].username);
+      // console.log(userN.data[0].username);
     };
     getUserName(uID);
   }, [sID]);
@@ -74,38 +82,85 @@ const UserSurveySubmission = () => {
   useEffect(() => {
     // console.log(surveyName);
     // console.log(surveyDesc);
-    // console.log(allQ);
-    // console.log(allQC);
+    console.log(allQ);
+    console.log(allQC);
   });
 
-  //   handleSurveyQ = async (sID) => {};
+  const handleSurveyQ = async (sId, qId, cId, uId) => {
+    let data = axios.get(
+      `http://localhost:3001/admin/getAnswerByUser/${sId}/${qId}/${cId}/${uId}`
+    );
+    return data;
+  };
 
   return (
     <Container>
       <Navigate />
+      <Stack direction="horizontal">
+        <div className="w-25 fixed">
+          {surveyName && surveyDesc ? (
+            <Stack>
+              <br />
+              <h6>
+                <b>{userName}'s</b> response for:
+              </h6>
+              <Card style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title>{surveyName}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    ID: "{sID}"
+                  </Card.Subtitle>
+                  <br />
+                  <Card.Text>{surveyDesc}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Stack>
+          ) : (
+            <></>
+          )}
+        </div>
 
-      <div className="w-25 fixed">
-        {surveyName && surveyDesc ? (
-          <Stack>
-            <br />
-            <h6>
-              <b>{userName}'s</b> response for:
-            </h6>
-            <Card style={{ width: "18rem" }}>
-              <Card.Body>
-                <Card.Title>{surveyName}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  ID: "{sID}"
-                </Card.Subtitle>
-                <br />
-                <Card.Text>{surveyDesc}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Stack>
-        ) : (
-          <></>
-        )}
-      </div>
+        <Stack direction="w-75 horizontal">
+          <br />
+          <div className="qmain-body">
+            <Stack>
+              <ol>
+                <div className="q-body">
+                  {allQ.map((q) => (
+                    <Container>
+                      <Stack className="q-main">
+                        <li>
+                          <Stack>
+                            <div className="q-type">
+                              <label>
+                                <b>{q.question}</b>
+                              </label>
+                              <Badge pill bg="secondary">
+                                {q.type}
+                              </Badge>
+                            </div>
+                            <br />
+
+                            <div className="q-sub">
+                              {/* {q.type === 'Multiple' ? (
+                                <ol type = 'a'>
+                                   {allQC[q.qId]?.map?.map((qc) => {
+                                     {}
+                                   })}
+                                </ol>
+                              )} */}
+                            </div>
+                          </Stack>
+                        </li>
+                      </Stack>
+                    </Container>
+                  ))}
+                </div>
+              </ol>
+            </Stack>
+          </div>
+        </Stack>
+      </Stack>
     </Container>
   );
 };

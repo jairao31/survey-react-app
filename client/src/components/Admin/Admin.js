@@ -11,13 +11,15 @@ const Admin = () => {
   const navTo = useNavigate();
 
   useEffect(() => {
+    // if (!surveyList) return;
     const getSurveyList = () => {
       Axios.get("http://localhost:3001/admin/").then((res) => {
         setSurveyList(res.data);
       });
     };
     getSurveyList();
-  }, [surveyList]);
+    // console.log(surveyList);
+  }, []);
 
   const deleteSurvey = (id) => {
     Axios.delete(`http://localhost:3001/admin/deleteSurvey/${id}`).then(
