@@ -29,17 +29,16 @@ export default function QuestionForm({ question, setQuestion }) {
   const listController = new ListController(question.options, setOptions);
 
   return (
-    <Container>
-      <Stack>
-        {/* <Form.Label>
+    <Stack gap={1} className="mb-1">
+      {/* <Form.Label>
           <h5>Question</h5>
         </Form.Label> */}
-        <Form.Control
-          type="text"
-          value={question.text}
-          onChange={handleChangeText}
-        />
-        {/* <InputGroup className="mb-3">
+      <Form.Control
+        type="text"
+        value={question.text}
+        onChange={handleChangeText}
+      />
+      {/* <InputGroup className="mb-3">
           <Form.Control
             id="q-input"
             placeholder="Enter Question"
@@ -53,67 +52,58 @@ export default function QuestionForm({ question, setQuestion }) {
             Button
           </Button>
         </InputGroup> */}
-        <br />
-        <Stack direction="horizontal" gap={3}>
-          <Form.Label>Type</Form.Label>
-          <Form.Select
-            id="question-type"
-            value={question.type}
-            onChange={handleChangeType}
-          >
-            {Object.values(Question.TYPES).map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </Form.Select>
-        </Stack>
+      <Stack direction="horizontal" gap={3}>
+        <Form.Label>Type</Form.Label>
+        <Form.Select
+          id="question-type"
+          value={question.type}
+          onChange={handleChangeType}
+        >
+          {Object.values(Question.TYPES).map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </Form.Select>
+      </Stack>
 
-        <br />
-
-        {question.hasOptions && (
-          <fieldset>
-            {/* <Form.Label>
+      {question.hasOptions && (
+        <fieldset>
+          {/* <Form.Label>
               <h5>Options</h5>
             </Form.Label> */}
-            <ol type="a">
-              {question.options.map((option, i) => (
-                <li>
-                  <Form.Group className="mb-3" controlId="New-Q">
-                    <Stack direction="horizontal" gap={1}>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter option"
-                        name={option}
-                        value={option}
-                        onChange={(e) => listController.set(i, e.target.value)}
-                      />
-                      <Button onClick={() => listController.moveUp(i)}>
-                        ▲
-                      </Button>{" "}
-                      <Button onClick={() => listController.moveDown(i)}>
-                        ▼
-                      </Button>{" "}
-                      <Button onClick={() => listController.remove(i)}>
-                        X
-                      </Button>{" "}
-                    </Stack>
-                  </Form.Group>
-                </li>
-              ))}
-            </ol>
-            <p>
-              <Button
-                disabled={!question.hasOptions}
-                onClick={() => listController.add("")}
-              >
-                ✚ Add Option
-              </Button>
-            </p>
-          </fieldset>
-        )}
-      </Stack>
-    </Container>
+          <ol type="a">
+            {question.options.map((option, i) => (
+              <li>
+                <Form.Group className="mb-3" controlId="New-Q">
+                  <Stack direction="horizontal" gap={1}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter option"
+                      name={option}
+                      value={option}
+                      onChange={(e) => listController.set(i, e.target.value)}
+                    />
+                    <Button onClick={() => listController.moveUp(i)}>▲</Button>{" "}
+                    <Button onClick={() => listController.moveDown(i)}>
+                      ▼
+                    </Button>{" "}
+                    <Button onClick={() => listController.remove(i)}>X</Button>{" "}
+                  </Stack>
+                </Form.Group>
+              </li>
+            ))}
+          </ol>
+
+          <Button
+            disabled={!question.hasOptions}
+            onClick={() => listController.add("")}
+          >
+            ✚ Add Option
+          </Button>
+        </fieldset>
+      )}
+    </Stack>
   );
 }
 

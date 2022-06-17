@@ -17,9 +17,8 @@ export default function SurveyQuestion({
   }
 
   return (
-    <Container className="border mx-5">
-      <br />
-      <Stack gap={3}>
+    <Container>
+      <Stack gap={1}>
         <Form>
           {editing ? (
             <QuestionForm question={question} setQuestion={setQuestion} />
@@ -57,7 +56,6 @@ export default function SurveyQuestion({
                 ))}
             </>
           )}
-          <br />
           <Button onClick={toggleEditing}>
             {editing ? <>Save</> : <>Edit</>}
           </Button>{" "}
@@ -66,7 +64,6 @@ export default function SurveyQuestion({
           <Button onClick={moveQuestionDown}>▼</Button>{" "}
         </Form>
       </Stack>
-      <br />
     </Container>
   );
 }
