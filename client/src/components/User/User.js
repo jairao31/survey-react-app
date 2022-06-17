@@ -12,10 +12,13 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import Navigate from "../Navigate";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
 const User = () => {
+  const navigate = useNavigate();
+
   const [surveyID, getSurveyID] = useState("");
   const [sID, setSID] = useState("");
   // const [surveyDetails, setSurveyDetails] = useState([]);
@@ -26,6 +29,7 @@ const User = () => {
   const [allQC, setAllQC] = useState({});
 
   const [username, setUsername] = useState("");
+  const [answers, setAnswers] = useState([]);
   // const [currentQ, setCurrentQ] = useState(null);
   // const [currentChoices, setCurrentChoices] = useState([]);
   // const [qNum, setQNum] = useState(0);
@@ -82,9 +86,84 @@ const User = () => {
     });
   }, [allQ]);
 
-  // useEffect(() => {
-  //   console.log("qc: ", allQC);
-  // }, [allQC]);
+  const handleSetAnswers = (array, answer, qID, cId) => {
+    let ans = answer;
+    // console.log(ans);
+    let exist = false;
+    if (array) {
+      ans = array[answer.value];
+      // console.log(ans);
+      exist = answers.find((i) => i.qID === qID && i.cId === cId);
+      if (exist) {
+        setAnswers((prev) => {
+          return prev.map((i) =>
+            i.qID === qID && i.cId === cId ? { qID, cId, answer: ans } : i
+          );
+        });
+      } else {
+        setAnswers((prev) => {
+          return [
+            ...prev,
+            {
+              qID,
+              cId,
+              answer: ans,
+            },
+          ];
+        });
+      }
+    } else {
+      exist = answers.find(
+        (i) => i.qID === qID && i.cId === cId && i.answer === ans
+      );
+      // console.log(exist);///
+      if (exist) {
+        setAnswers((prev) => {
+          return prev.filter((i) => i.cId !== cId);
+        });
+      } else {
+        setAnswers((prev) => {
+          return [
+            ...prev,
+            {
+              qID,
+              cId,
+              answer: ans,
+            },
+          ];
+        });
+      }
+    }
+  };
+
+  const handleSurveySubmit = async (sID) => {
+    try {
+      let submitedUID = await axios.post(
+        `http://localhost:3001/user/submitSurvey/${sID}`,
+        {
+          username: username,
+        }
+      );
+      // console.log(submitedUID);
+      if (submitedUID) {
+        await axios.post(
+          `http://localhost:3001/user/createAnswer/${sID}/${submitedUID.data}`,
+          { answers: answers }
+        );
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    // console.log("qc: ", allQC);
+  }, [allQC]);
+
+  useEffect(() => {
+    console.log(answers);
+  }, [answers]);
 
   // useEffect(() => {
   //   // if (!surveyName || surveyName.trim().length === 0 || !surveyDesc || surveyDesc.trim().length === 0) return;
@@ -117,7 +196,7 @@ const User = () => {
   // console.log(surveyDetails[0].name);
   // console.log(surveyName, surveyDesc);
 
-  console.log(allQ);
+  // console.log(allQ);
   // console.log(allQC);
 
   return (
@@ -225,6 +304,14 @@ const User = () => {
                                       <Form.Check
                                         type="checkbox"
                                         id={qc.cId}
+                                        onChange={(e) =>
+                                          handleSetAnswers(
+                                            null,
+                                            e.target.value,
+                                            q.qId,
+                                            qc.cId
+                                          )
+                                        }
                                         name={qc.cQuestion}
                                         value={qc.cQuestion}
                                         label={qc.cQuestion}
@@ -253,6 +340,14 @@ const User = () => {
                                             { value: 2 },
                                             { value: 3 },
                                           ]}
+                                          onChange={(val) =>
+                                            handleSetAnswers(
+                                              inventoryOpt,
+                                              val,
+                                              q.qId,
+                                              qc.cId
+                                            )
+                                          }
                                         />
                                       </div>
                                     </div>
@@ -278,6 +373,14 @@ const User = () => {
                                             { value: 3 },
                                             { value: 3 },
                                           ]}
+                                          onChange={(val) =>
+                                            handleSetAnswers(
+                                              likertOpt,
+                                              val,
+                                              q.qId,
+                                              qc.cId
+                                            )
+                                          }
                                         />
                                       </div>
                                     </div>
@@ -304,7 +407,29 @@ const User = () => {
       </div>
       <div className="u-submit">
         {surveyName && surveyDesc ? (
-          <Button className="b-survey">Submit</Button>
+          <Button
+            className="b-survey"
+            onClick={async () => {
+              const result = handleSurveySubmit(sID);
+              if (result) {
+                alert(
+                  `Survey ${surveyName} successfully submitted for ${username}`
+                );
+                setSID("");
+                getSurveyID("");
+                setSurveyName("");
+                setSurveyDesc("");
+                setAllQ([]);
+                setAllQC([]);
+                // setUsername("");
+                setAnswers([]);
+              } else {
+                alert(`Survey could not be submitted for ${username}`);
+              }
+            }}
+          >
+            Submit
+          </Button>
         ) : (
           <></>
         )}
