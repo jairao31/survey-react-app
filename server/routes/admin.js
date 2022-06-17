@@ -161,29 +161,30 @@ router.get("/getAllQchoices/:surveyId/:questionId", (req, res) => {
 });
 
 //route to get answer for a question by a user
-router.get("/getAnswerByUser/:surveyId/:qId/:uId", (req, res) => {
+router.get("/getAnswerByUser/:surveyId/:qId/:cId/:uId", (req, res) => {
   const surveyID = req.params.surveyId;
   const qID = req.params.qId;
+  const cID = req.params.cId;
   const uID = req.params.uId;
   db.query(
-    "SELECT * FROM answers WHERE questionId = ? AND surveyId = ? AND uId = ?",
-    [qID, surveyID, uID],
+    "SELECT answer FROM answers WHERE uId = ? AND questionId = ? AND cQuestionId = ? AND surveyId = ?",
+    [uID, qID, cID, surveyID],
     (err, result) => {
       if (err) {
         res.json(err);
       } else {
-        let arr = [];
-        result.forEach((el) => {
-          let ob = {};
-          ob["aId"] = el.aId;
-          ob["uId"] = el.uId;
-          ob["answer"] = el.answer;
-          ob["questionId"] = el.questionId;
-          ob["cQuestionId"] = el.cQuestionId;
-          ob["surveyId"] = el.surveyId;
-          arr.push(ob);
-        });
-        res.json(arr);
+        // let arr = [];
+        // result.forEach((el) => {
+        //   let ob = {};
+        //   ob["aId"] = el.aId;
+        //   ob["uId"] = el.uId;
+        //   ob["answer"] = el.answer;
+        //   ob["questionId"] = el.questionId;
+        //   ob["cQuestionId"] = el.cQuestionId;
+        //   ob["surveyId"] = el.surveyId;
+        //   arr.push(ob);
+        // });
+        res.json(result);
       }
     }
   );
@@ -197,6 +198,18 @@ router.delete("/deleteSurvey/:surveyid", (req, res) => {
       res.json(err);
     } else {
       res.json(`Survey ${surveyID} deleted successfully!`);
+    }
+  });
+});
+
+//route to get username by uid
+router.get("/getUsername/:uId", (req, res) => {
+  const userID = req.params.uId;
+  db.query("SELECT * FROM user WHERE uId = ?", userID, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
     }
   });
 });

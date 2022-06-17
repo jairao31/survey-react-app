@@ -97,6 +97,13 @@ body{
   justify-content: space-between;
 }
 
+.L-survey{
+  display: flex;
+}
+
+.v-button{
+  float: right;
+}
 /* .survey-list{
   grid-auto-columns: max-content;
   grid-auto-rows: auto;

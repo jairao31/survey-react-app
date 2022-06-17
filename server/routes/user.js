@@ -30,6 +30,7 @@ router.get("/getSubmission/:surveyId", (req, res) => {
   });
 });
 
+
 //route to submit survey by a user
 router.post("/submitSurvey/:surveyId", async (req, res) => {
   const reqData = req.body;

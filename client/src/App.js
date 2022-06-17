@@ -7,9 +7,8 @@ import Admin from "./components/Admin/Admin";
 import NewSurvey from "./components/Admin/NewSurvey";
 import SurveyBuilder from "./components/Survey/SurveyBuilder";
 import ViewSubmission from "./components/Admin/ViewSubmission";
+import UserSurveySubmission from "./components/User/UserSurveySubmission";
 import "./App.css";
-
-import Multiple from "./components/QuestionType/Multiple";
 
 import User from "./components/User/User";
 
@@ -32,10 +31,12 @@ function App() {
                 path="/admin/viewsurvey/:id"
                 element={<ViewSubmission />}
               />
+              <Route
+                path="/admin/viewsurvey/:sId/:uId"
+                element={<UserSurveySubmission />}
+              />
 
               <Route path="/user" element={<User />} />
-
-              <Route path="/multiple" element={<Multiple />} />
             </Routes>
           </div>
         </Router>

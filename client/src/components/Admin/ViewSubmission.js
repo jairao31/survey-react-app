@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, ListGroup } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
+import { Button, Container, ListGroup, Stack } from "react-bootstrap";
 import Navigate from "../Navigate";
 
 import Axios from "axios";
@@ -9,7 +9,7 @@ const ViewSubmission = () => {
   const surveyID = useParams();
   //   const [sID, setSID] = useState("");
   const [surveyDetails, setSurveyDetails] = useState([]);
-
+  const navTo = useNavigate();
   useEffect(() => {
     const getSubmissionList = () => {
       Axios.get(`http://localhost:3001/user/getSubmission/${surveyID.id}`).then(
@@ -19,22 +19,40 @@ const ViewSubmission = () => {
       );
     };
     getSubmissionList();
+    console.log(surveyDetails);
   }, [surveyDetails]);
 
   return (
     <Container>
       <Navigate />
-      <h2>Survey ID: {surveyID.id}</h2>
+      <h2>Survey ID: "{surveyID.id}"</h2>
       <br />
       <br />
-      <h5>User List:</h5>
-
+      <h5>
+        <u>User List:</u>
+      </h5>
+      <br />
       {surveyDetails.length > 0 ? (
-        <ListGroup>
+        <Stack gap={2}>
           {surveyDetails.map((val) => {
-            return <ListGroup.Item>{val.username}</ListGroup.Item>;
+            return (
+              <Stack direction="horizontal" gap={2}>
+                <ListGroup.Item className="w-100">
+                  {val.username}
+
+                  <Button
+                    className="v-button"
+                    onClick={() => {
+                      navTo(`/admin/viewsurvey/${surveyID.id}/${val.uId}`);
+                    }}
+                  >
+                    View
+                  </Button>
+                </ListGroup.Item>
+              </Stack>
+            );
           })}
-        </ListGroup>
+        </Stack>
       ) : (
         <p>No submissions yet!</p>
       )}
