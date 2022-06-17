@@ -256,6 +256,7 @@ const User = () => {
         </div>
       </Stack>
       <br />
+      {/* ////////////// */}
       <div className="user-page">
         <div className="w-25 fixed">
           {surveyName && surveyDesc ? (
