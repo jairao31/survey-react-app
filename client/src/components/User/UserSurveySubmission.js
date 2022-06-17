@@ -24,7 +24,7 @@ const UserSurveySubmission = () => {
         `http://localhost:3001/admin/getUsername/${uid}`
       );
       setUserName(userN.data[0].username);
-        console.log(userN.data[0].username);
+      console.log(userN.data[0].username);
     };
     getUserName(uID);
   }, [sID]);

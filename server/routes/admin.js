@@ -205,7 +205,7 @@ router.delete("/deleteSurvey/:surveyid", (req, res) => {
 //route to get username by uid
 router.get("/getUsername/:uId", (req, res) => {
   const userID = req.params.uId;
-  db.query("SELECT * FROM users WHERE uId = ?", userID, (err, result) => {
+  db.query("SELECT username FROM user WHERE uId = ?", userID, (err, result) => {
     if (err) {
       res.json(err);
     } else {
