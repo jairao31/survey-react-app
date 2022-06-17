@@ -29,11 +29,11 @@ body{
 }
 
 .q-body{
-  border-spacing: 5px;
+  /* border-spacing: 5px; */
   width: 100%;
-  float: right;
+  /* float: right; */
+  margin-right: 30px;
   padding-left: 0px;
-  padding-right: 0px;
   
 }
 
@@ -50,19 +50,21 @@ body{
   border-radius: 15px;
   margin-bottom: 10px;
   padding: 10px;
-  /* padding-left: 20px; */
-  
+  padding-left: 10px;
+  width: 100%;
 }
 
 .qmain-body{
   float: right;
   margin-left: 10px;
+  margin-right: 10px;
   width: 100%;
 }
 
 
 
 .q-type{
+  padding-left: 0px;
   display: flex;
   justify-content: space-between;
 }
@@ -71,15 +73,28 @@ body{
   justify-content: space-between;
 }
 
-
-
-
 .q-sub{
-  width: 55%;
+  width: 100%;
+  padding-left: 20px;
 }
 
 .u-submit{
   float: right;
+}
+
+.inventory{
+  justify-content: space-between;
+}
+
+.inventory-opt{
+  width: 75%;
+  float: right;
+}
+
+.inventory-static{
+  width: 75%;
+  float: right;
+  justify-content: space-between;
 }
 
 /* .survey-list{

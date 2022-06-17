@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Likert from "react-likert-scale";
 import {
   Container,
   Stack,
@@ -116,7 +117,7 @@ const User = () => {
   // console.log(surveyDetails[0].name);
   // console.log(surveyName, surveyDesc);
 
-  // console.log(allQ);
+  console.log(allQ);
   // console.log(allQC);
 
   return (
@@ -215,12 +216,80 @@ const User = () => {
                               </Badge>
                             </div>
                             <br />
+
                             <div className="q-sub">
-                              <ol type="a">
+                              {q.type === "Multiple" ? (
+                                <ol type="a">
+                                  {allQC[q.qId]?.map((qc) => (
+                                    <li>
+                                      <Form.Check
+                                        type="checkbox"
+                                        id={qc.cId}
+                                        name={qc.cQuestion}
+                                        value={qc.cQuestion}
+                                        label={qc.cQuestion}
+                                      />
+                                    </li>
+                                  ))}
+                                </ol>
+                              ) : q.type === "Inventory" ? (
+                                <ol type="a">
+                                  <div className="inventory-static">
+                                    {inventoryOpt.map((i) => (
+                                      <label>{i}</label>
+                                    ))}
+                                  </div>
+                                  {allQC[q.qId]?.map((qc) => (
+                                    <div className="inventory">
+                                      <div>
+                                        <li>{qc.cQuestion}</li>
+                                      </div>
+                                      <div className="inventory-opt">
+                                        <Likert
+                                          id={qc.cId}
+                                          responses={[
+                                            { value: 0 },
+                                            { value: 1 },
+                                            { value: 2 },
+                                            { value: 3 },
+                                          ]}
+                                        />
+                                      </div>
+                                    </div>
+                                  ))}
+                                </ol>
+                              ) : (
+                                <ol type="a">
+                                  <div className="inventory-static">
+                                    {likertOpt.map((i) => (
+                                      <label>{i}</label>
+                                    ))}
+                                  </div>
+                                  {allQC[q.qId]?.map((qc) => (
+                                    <div className="inventory">
+                                      <li>{qc.cQuestion}</li>
+                                      <div className="inventory-opt">
+                                        <Likert
+                                          id={qc.cId}
+                                          responses={[
+                                            { value: 0 },
+                                            { value: 1 },
+                                            { value: 2 },
+                                            { value: 3 },
+                                            { value: 3 },
+                                          ]}
+                                        />
+                                      </div>
+                                    </div>
+                                  ))}
+                                </ol>
+                              )}
+
+                              {/* <ol type="a">
                                 {allQC[q.qId]?.map((qc) => (
                                   <li>{qc.cQuestion}</li>
                                 ))}
-                              </ol>
+                              </ol> */}
                             </div>
                           </Stack>
                         </li>
