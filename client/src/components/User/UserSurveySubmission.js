@@ -80,17 +80,36 @@ const UserSurveySubmission = () => {
   }, [allQ]);
 
   useEffect(() => {
+    // if (!uID && !sID) return;
+    const getAnswerList = async (sid, uid) => {
+      const ansData = await axios.get(
+        `http://localhost:3001/admin/getAnswerByUser/${sid}/${uid}`
+      );
+      console.log(ansData.data);
+      // return ansData;
+      setAns(ansData.data);
+    };
+    getAnswerList(sID, uID);
+  }, [sID, uID]);
+
+  useEffect(() => {
     // console.log(surveyName);
     // console.log(surveyDesc);
-    console.log(allQ);
-    console.log(allQC);
+    // console.log(allQ);
+    // console.log(ans);
+    // console.log(allQC);
   });
+  // const array1 = [5, 12, 8, 130, 44];
 
-  const handleSurveyQ = async (sId, qId, cId, uId) => {
-    let data = axios.get(
-      `http://localhost:3001/admin/getAnswerByUser/${sId}/${qId}/${cId}/${uId}`
+  // const found = array1.find(element => element > 10);
+
+  // console.log(found);
+  // expected output: 12
+
+  const checkAns = async (arr, qID, cID) => {
+    const found = arr.find(
+      (el) => el.questionId === qID && el.cQuestionId === cID
     );
-    return data;
   };
 
   return (
@@ -142,13 +161,19 @@ const UserSurveySubmission = () => {
                             <br />
 
                             <div className="q-sub">
-                              {/* {q.type === 'Multiple' ? (
-                                <ol type = 'a'>
-                                   {allQC[q.qId]?.map?.map((qc) => {
-                                     {}
-                                   })}
+                              {q.type === "Multiple" ? (
+                                <ol type="a">
+                                  {/* {allQC[q.qId]?.map((qc) => {
+                                    {
+
+
+                                    }
+                                  })} */}
+                                  {/* <li>answer here</li> */}
                                 </ol>
-                              )} */}
+                              ) : (
+                                <></>
+                              )}
                             </div>
                           </Stack>
                         </li>
@@ -163,6 +188,6 @@ const UserSurveySubmission = () => {
       </Stack>
     </Container>
   );
-};
+};;;;;;
 
 export default UserSurveySubmission;

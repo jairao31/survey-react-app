@@ -19,7 +19,7 @@ const Admin = () => {
     };
     getSurveyList();
     // console.log(surveyList);
-  }, []);
+  }, [surveyList]);
 
   const deleteSurvey = (id) => {
     Axios.delete(`http://localhost:3001/admin/deleteSurvey/${id}`).then(
