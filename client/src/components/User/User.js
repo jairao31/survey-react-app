@@ -205,7 +205,7 @@ const User = () => {
       <Stack className="newsurvey-h" direction="horizontal">
         {/* <div className="u-input"> */}
         <InputGroup className="u-input">
-          <InputGroup.Text id="basic-addon1">Username</InputGroup.Text>
+          <InputGroup.Text id="basic-addon1">Username 👤</InputGroup.Text>
           <Form.Control
             placeholder="enter here!"
             aria-label="Username"
@@ -237,7 +237,7 @@ const User = () => {
                 }
               }}
             >
-              Attempt
+              Take Survey
             </Button>
             <Button
               variant="outline-primary"

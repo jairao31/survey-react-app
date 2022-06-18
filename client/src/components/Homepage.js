@@ -20,11 +20,11 @@ const Homepage = () => {
             </div>
             <div className="ms-auto">
               <Link className="adminLink" to="/admin">
-                <h2>Admin</h2>
+                <h2>Admin👨🏻‍💻</h2>
               </Link>
               <br />
               <Link className="userLink" to="/user">
-                <h2>User</h2>
+                <h2>User👤</h2>
               </Link>
               <br />
             </div>
