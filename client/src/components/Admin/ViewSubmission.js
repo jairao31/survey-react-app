@@ -39,16 +39,15 @@ const ViewSubmission = () => {
               <Stack direction="horizontal" gap={2}>
                 <ListGroup.Item className="w-100">
                   {val.username}
-
-                  <Button
-                    className="v-button"
-                    onClick={() => {
-                      navTo(`/admin/viewsurvey/${surveyID.id}/${val.uId}`);
-                    }}
-                  >
-                    View
-                  </Button>
                 </ListGroup.Item>
+                <Button
+                  className="v-button"
+                  onClick={() => {
+                    navTo(`/admin/viewsurvey/${surveyID.id}/${val.uId}`);
+                  }}
+                >
+                  View
+                </Button>
               </Stack>
             );
           })}

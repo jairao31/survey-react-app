@@ -12,10 +12,11 @@ const Navigate = () => {
             <img
               alt=""
               src={logo}
-              width="50"
-              height="50"
+              width="30"
+              height="30"
               className="d-inline-block align-top"
-            />{" "}
+            />
+            Build-A-Survey
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>

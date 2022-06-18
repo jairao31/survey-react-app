@@ -324,72 +324,116 @@ const User = () => {
                                   ))}
                                 </ol>
                               ) : q.type === "Inventory" ? (
-                                <ol type="a">
-                                  <div className="inventory-static">
-                                    {inventoryOpt.map((i) => (
-                                      <label>{i}</label>
-                                    ))}
+                                <div>
+                                  <div className="II-opt">
+                                    {/* ["A Novice", "A Practitioner", "An Expert", "A Leader"] */}
+                                    <label>A Novice: 🤥</label>
+                                    <label>A Practitioner: 😄</label>
+                                    <label>An Expert: 🧐</label>
+                                    <label>A Leader: 😎</label>
                                   </div>
-                                  {allQC[q.qId]?.map((qc) => (
-                                    <div className="inventory">
+                                  <ol type="a">
+                                    <br />
+                                    {allQC[q.qId]?.map((qc) => (
                                       <div>
-                                        <li>{qc.cQuestion}</li>
+                                        <div className="inventory">
+                                          <div className="I-div">
+                                            <br />
+                                            <div className="LI-opt">
+                                              <li>{qc.cQuestion}</li>
+                                            </div>
+
+                                            <div className="LI-size">
+                                              <Likert
+                                                id={qc.cId}
+                                                responses={[
+                                                  { value: 0, text: "🤥" },
+                                                  { value: 1, text: "😄" },
+                                                  { value: 2, text: "🧐" },
+                                                  { value: 3, text: "😎" },
+                                                ]}
+                                                onChange={(val) =>
+                                                  handleSetAnswers(
+                                                    inventoryOpt,
+                                                    val,
+                                                    q.qId,
+                                                    qc.cId
+                                                  )
+                                                }
+                                              />
+                                            </div>
+                                            {/* <br /> */}
+                                          </div>
+                                        </div>
                                       </div>
-                                      <div className="inventory-opt">
-                                        <Likert
-                                          id={qc.cId}
-                                          responses={[
-                                            { value: 0 },
-                                            { value: 1 },
-                                            { value: 2 },
-                                            { value: 3 },
-                                          ]}
-                                          onChange={(val) =>
-                                            handleSetAnswers(
-                                              inventoryOpt,
-                                              val,
-                                              q.qId,
-                                              qc.cId
-                                            )
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-                                  ))}
-                                </ol>
-                              ) : (
-                                <ol type="a">
-                                  <div className="inventory-static">
-                                    {likertOpt.map((i) => (
-                                      <label>{i}</label>
                                     ))}
-                                  </div>
-                                  {allQC[q.qId]?.map((qc) => (
-                                    <div className="inventory">
-                                      <li>{qc.cQuestion}</li>
-                                      <div className="inventory-opt">
-                                        <Likert
-                                          id={qc.cId}
-                                          responses={[
-                                            { value: 0 },
-                                            { value: 1 },
-                                            { value: 2 },
-                                            { value: 3 },
-                                            { value: 3 },
-                                          ]}
-                                          onChange={(val) =>
-                                            handleSetAnswers(
-                                              likertOpt,
-                                              val,
-                                              q.qId,
-                                              qc.cId
-                                            )
-                                          }
-                                        />
-                                      </div>
+                                  </ol>
+                                </div>
+                              ) : (
+                                <div>
+                                  <div className="I-opt">
+                                    <div className="L-emoji">
+                                      <label>
+                                        <small>Not At All Like Me:</small>
+                                      </label>
+                                      <label>
+                                        <small>Not Very Like Me:</small>
+                                      </label>
+                                      <label>
+                                        <small>A Little Like Me:</small>
+                                      </label>
+                                      <label>
+                                        <small>Somewhat Like Me:</small>
+                                      </label>
+                                      <label>
+                                        <small>Very Like Me:</small>
+                                      </label>
                                     </div>
-                                  ))}
-                                </ol>
+                                    <div className="L-emoji">
+                                      <label>👿</label>
+                                      <label>😑</label>
+                                      <label>🤔</label>
+                                      <label>😛</label>
+                                      <label>😎</label>
+                                    </div>
+                                  </div>
+                                  <ol type="a">
+                                    <br />
+                                    {/* <div className="inventory-static">
+                                      {likertOpt.map((i) => (
+                                        <label>{i}</label>
+                                      ))}
+                                    </div> */}
+                                    {allQC[q.qId]?.map((qc) => (
+                                      <div className="inventory">
+                                        <div className="I-div">
+                                          <br />
+                                          <li>{qc.cQuestion}</li>
+                                          <div className="inventory-opt">
+                                            <Likert
+                                              id={qc.cId}
+                                              responses={[
+                                                { value: 0, text: "👿" },
+                                                { value: 1, text: "😑" },
+                                                { value: 2, text: "🤔" },
+                                                { value: 3, text: "😛" },
+                                                { value: 4, text: "😎" },
+                                              ]}
+                                              onChange={(val) =>
+                                                handleSetAnswers(
+                                                  likertOpt,
+                                                  val,
+                                                  q.qId,
+                                                  qc.cId
+                                                )
+                                              }
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </ol>
+                                </div>
                               )}
 
                               {/* <ol type="a">
