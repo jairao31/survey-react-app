@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Likert from "react-likert-scale";
 import {
   Button,
   Container,
@@ -7,6 +8,7 @@ import {
   Stack,
   Card,
   Badge,
+  Form,
 } from "react-bootstrap";
 import Navigate from "../Navigate";
 
@@ -106,16 +108,34 @@ const UserSurveySubmission = () => {
   // console.log(found);
   // expected output: 12
 
-  const checkAns = async (arr, qID, cID) => {
-    const found = arr.find(
-      (el) => el.questionId === qID && el.cQuestionId === cID
-    );
+  // const checkAns = async (arr, qID, cID) => {
+  //   const found = arr.find(
+  //     (el) => el.questionId === qID && el.cQuestionId === cID
+  //   );
+  //   if (!found) {
+  //     return false;
+  //   }
+  //   return found;
+
+  // };
+
+  const inventoryOpt = ["A Novice", "A Practitioner", "An Expert", "A Leader"];
+  const likertOpt = [
+    "Not At All Like Me",
+    "Not Very Like Me",
+    "A Little Like Me",
+    "Somewhat Like Me",
+    "Very Like Me",
+  ];
+
+  const isChecked = (index, ans, arr) => {
+    return arr[index] === ans;
   };
 
   return (
     <Container>
       <Navigate />
-      <Stack direction="horizontal">
+      <div className="user-page">
         <div className="w-25 fixed">
           {surveyName && surveyDesc ? (
             <Stack>
@@ -138,54 +158,401 @@ const UserSurveySubmission = () => {
             <></>
           )}
         </div>
+        <Stack direction="horizontal">
+          <Stack direction="w-75 horizontal">
+            <br />
+            <div className="qmain-body">
+              <Stack>
+                <ol>
+                  <div className="q-body">
+                    {allQ.map((q, index) => (
+                      <Container key={index}>
+                        <Stack className="q-main">
+                          <li>
+                            <Stack>
+                              <div className="q-type">
+                                <label>
+                                  <b>{q.question}</b>
+                                </label>
+                                <Badge pill bg="secondary">
+                                  {q.type}
+                                </Badge>
+                              </div>
+                              <br />
 
-        <Stack direction="w-75 horizontal">
-          <br />
-          <div className="qmain-body">
-            <Stack>
-              <ol>
-                <div className="q-body">
-                  {allQ.map((q) => (
-                    <Container>
-                      <Stack className="q-main">
-                        <li>
-                          <Stack>
-                            <div className="q-type">
-                              <label>
-                                <b>{q.question}</b>
-                              </label>
-                              <Badge pill bg="secondary">
-                                {q.type}
-                              </Badge>
-                            </div>
-                            <br />
+                              <div className="q-sub">
+                                {q.type === "Multiple" ? (
+                                  <ol type="a">
+                                    {allQC[q.qId]?.map((qc, index) => (
+                                      <li key={index}>
+                                        <Form.Check
+                                          type="checkbox"
+                                          id={qc.cId}
+                                          checked={
+                                            ans.find(
+                                              (i) => i.cQuestionId === qc.cId
+                                            )?.answer
+                                          }
+                                          name={qc.cQuestion}
+                                          value={qc.cQuestion}
+                                          label={qc.cQuestion}
+                                        />
+                                      </li>
+                                    ))}
+                                  </ol>
+                                ) : q.type === "Inventory" ? (
+                                  <div>
+                                    <div className="II-opt">
+                                      {/* ["A Novice", "A Practitioner", "An Expert", "A Leader"] */}
+                                      <label>A Novice: 🤥</label>
+                                      <label>A Practitioner: 😄</label>
+                                      <label>An Expert: 🧐</label>
+                                      <label>A Leader: 😎</label>
+                                    </div>
+                                    <ol type="a">
+                                      <br />
+                                      {allQC[q.qId]?.map((qc) => (
+                                        <div>
+                                          <div className="inventory">
+                                            <div className="I-div">
+                                              <br />
+                                              <div className="LI-opt">
+                                                <li>{qc.cQuestion}</li>
+                                              </div>
 
-                            <div className="q-sub">
-                              {q.type === "Multiple" ? (
-                                <ol type="a">
-                                  {/* {allQC[q.qId]?.map((qc) => {
-                                    {
+                                              <div className="LI-size">
+                                                <Likert
+                                                  id={qc.cId}
+                                                  responses={[
+                                                    {
+                                                      value: 0,
+                                                      text: "🤥",
+                                                      checked: isChecked(
+                                                        0,
+                                                        ans.find(
+                                                          (i) =>
+                                                            i.cQuestionId ===
+                                                            qc.cId
+                                                        )?.answer,
+                                                        inventoryOpt
+                                                      ),
+                                                    },
+                                                    {
+                                                      value: 1,
+                                                      text: "😄",
+                                                      checked: isChecked(
+                                                        1,
+                                                        ans.find(
+                                                          (i) =>
+                                                            i.cQuestionId ===
+                                                            qc.cId
+                                                        )?.answer,
+                                                        inventoryOpt
+                                                      ),
+                                                    },
+                                                    {
+                                                      value: 2,
+                                                      text: "🧐",
+                                                      checked: isChecked(
+                                                        2,
+                                                        ans.find(
+                                                          (i) =>
+                                                            i.cQuestionId ===
+                                                            qc.cId
+                                                        )?.answer,
+                                                        inventoryOpt
+                                                      ),
+                                                    },
+                                                    {
+                                                      value: 3,
+                                                      text: "😎",
+                                                      checked: isChecked(
+                                                        3,
+                                                        ans.find(
+                                                          (i) =>
+                                                            i.cQuestionId ===
+                                                            qc.cId
+                                                        )?.answer,
+                                                        inventoryOpt
+                                                      ),
+                                                    },
+                                                  ]}
+                                                  disabled={true}
+                                                />
+                                              </div>
+                                              {/* <br /> */}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
 
+                                      {/* {allQC[q.qId]?.map((qc, index) => (
+                                        <div className="inventory" key={index}>
+                                          <div>
+                                            <li>{qc.cQuestion}</li>
+                                          </div>
+                                          <div className="inventory-opt">
+                                            <Likert
+                                              id={qc.cId}
+                                              responses={[
+                                                {
+                                                  value: 0,
+                                                  checked: isChecked(
+                                                    0,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    inventoryOpt
+                                                  ),
+                                                },
+                                                {
+                                                  value: 1,
+                                                  checked: isChecked(
+                                                    1,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    inventoryOpt
+                                                  ),
+                                                },
+                                                {
+                                                  value: 2,
+                                                  checked: isChecked(
+                                                    2,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    inventoryOpt
+                                                  ),
+                                                },
+                                                {
+                                                  value: 3,
+                                                  checked: isChecked(
+                                                    3,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    inventoryOpt
+                                                  ),
+                                                },
+                                              ]}
+                                              disabled={true}
+                                            />
+                                          </div>
+                                        </div>
+                                      ))} */}
+                                    </ol>
+                                  </div>
+                                ) : (
+                                  <div>
+                                    <div className="I-opt">
+                                      <div className="L-emoji">
+                                        <label>
+                                          <small>Not At All Like Me:</small>
+                                        </label>
+                                        <label>
+                                          <small>Not Very Like Me:</small>
+                                        </label>
+                                        <label>
+                                          <small>A Little Like Me:</small>
+                                        </label>
+                                        <label>
+                                          <small>Somewhat Like Me:</small>
+                                        </label>
+                                        <label>
+                                          <small>Very Like Me:</small>
+                                        </label>
+                                      </div>
+                                      <div className="L-emoji">
+                                        <label>👿</label>
+                                        <label>😑</label>
+                                        <label>🤔</label>
+                                        <label>😛</label>
+                                        <label>😎</label>
+                                      </div>
+                                    </div>
+                                    <ol type="a">
+                                      <br />
+                                      {/* <div className="inventory-static">
+                                        {likertOpt.map((i, index) => (
+                                          <label key={index}>{i}</label>
+                                        ))}
+                                      </div> */}
+                                      {allQC[q.qId]?.map((qc) => (
+                                        <div className="inventory">
+                                          <div className="I-div">
+                                            <br />
+                                            <li>{qc.cQuestion}</li>
+                                            <div className="inventory-opt">
+                                              <Likert
+                                                id={qc.cId}
+                                                responses={[
+                                                  {
+                                                    value: 0,
+                                                    text: "👿",
+                                                    checked: isChecked(
+                                                      0,
+                                                      ans.find(
+                                                        (i) =>
+                                                          i.cQuestionId ===
+                                                          qc.cId
+                                                      )?.answer,
+                                                      likertOpt
+                                                    ),
+                                                  },
+                                                  {
+                                                    value: 1,
+                                                    text: "😑",
+                                                    checked: isChecked(
+                                                      1,
+                                                      ans.find(
+                                                        (i) =>
+                                                          i.cQuestionId ===
+                                                          qc.cId
+                                                      )?.answer,
+                                                      likertOpt
+                                                    ),
+                                                  },
+                                                  {
+                                                    value: 2,
+                                                    text: "🤔",
+                                                    checked: isChecked(
+                                                      2,
+                                                      ans.find(
+                                                        (i) =>
+                                                          i.cQuestionId ===
+                                                          qc.cId
+                                                      )?.answer,
+                                                      likertOpt
+                                                    ),
+                                                  },
+                                                  {
+                                                    value: 3,
+                                                    text: "😛",
+                                                    checked: isChecked(
+                                                      3,
+                                                      ans.find(
+                                                        (i) =>
+                                                          i.cQuestionId ===
+                                                          qc.cId
+                                                      )?.answer,
+                                                      likertOpt
+                                                    ),
+                                                  },
+                                                  {
+                                                    value: 4,
+                                                    text: "😎",
+                                                    checked: isChecked(
+                                                      4,
+                                                      ans.find(
+                                                        (i) =>
+                                                          i.cQuestionId ===
+                                                          qc.cId
+                                                      )?.answer,
+                                                      likertOpt
+                                                    ),
+                                                  },
+                                                ]}
+                                                disabled
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                      {/* {allQC[q.qId]?.map((qc, index) => (
+                                        <div className="inventory" key={index}>
+                                          <li>{qc.cQuestion}</li>
+                                          <div className="inventory-opt">
+                                            <Likert
+                                              id={qc.cId}
+                                              responses={[
+                                                {
+                                                  value: 0,
+                                                  checked: isChecked(
+                                                    0,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    likertOpt
+                                                  ),
+                                                },
+                                                {
+                                                  value: 1,
+                                                  checked: isChecked(
+                                                    1,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    likertOpt
+                                                  ),
+                                                },
+                                                {
+                                                  value: 2,
+                                                  checked: isChecked(
+                                                    2,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    likertOpt
+                                                  ),
+                                                },
+                                                {
+                                                  value: 3,
+                                                  checked: isChecked(
+                                                    3,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    likertOpt
+                                                  ),
+                                                },
+                                                {
+                                                  value: 4,
+                                                  checked: isChecked(
+                                                    4,
+                                                    ans.find(
+                                                      (i) =>
+                                                        i.cQuestionId === qc.cId
+                                                    )?.answer,
+                                                    likertOpt
+                                                  ),
+                                                },
+                                              ]}
+                                              disabled
+                                            />
+                                          </div>
+                                        </div>
+                                      ))} */}
+                                    </ol>
+                                  </div>
+                                )}
 
-                                    }
-                                  })} */}
-                                  {/* <li>answer here</li> */}
-                                </ol>
-                              ) : (
-                                <></>
-                              )}
-                            </div>
-                          </Stack>
-                        </li>
-                      </Stack>
-                    </Container>
-                  ))}
-                </div>
-              </ol>
-            </Stack>
-          </div>
+                                {/* <ol type="a">
+                                {allQC[q.qId]?.map((qc) => (
+                                  <li>{qc.cQuestion}</li>
+                                ))}
+                              </ol> */}
+                              </div>
+                            </Stack>
+                          </li>
+                        </Stack>
+                      </Container>
+                    ))}
+                  </div>
+                </ol>
+              </Stack>
+            </div>
+          </Stack>
         </Stack>
-      </Stack>
+      </div>
     </Container>
   );
 };;;;;;
