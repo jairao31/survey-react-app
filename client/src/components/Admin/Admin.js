@@ -38,7 +38,7 @@ const Admin = () => {
       <Navigate />
       <Stack direction="horizontal" gap={3}>
         <div>
-          <FormLabel>Admin page</FormLabel>
+          <h4>Admin page 👨🏻‍💻</h4>
         </div>
         <div className="ms-auto">
           <Button
@@ -51,7 +51,8 @@ const Admin = () => {
         </div>
       </Stack>
       <br />
-      <h4>Survey List:</h4>
+      {/* <h4>Survey List:</h4> */}
+      <FormLabel>Survey List:</FormLabel>
       <br />
 
       {surveyList.length > 0 ? (
