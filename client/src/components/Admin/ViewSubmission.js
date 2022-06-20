@@ -53,7 +53,7 @@ const ViewSubmission = () => {
           })}
         </Stack>
       ) : (
-        <p>No submissions yet!</p>
+        <p>No submissions yet! 👻</p>
       )}
     </Container>
   );

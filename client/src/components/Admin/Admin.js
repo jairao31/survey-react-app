@@ -29,8 +29,12 @@ const Admin = () => {
     );
   };
 
-  const handleOnClick = (id) => {
+  const handleOnClickView = (id) => {
     navTo(`/admin/viewsurvey/${id}`);
+  };
+
+  const handleOnClickEdit = (id) => {
+    navTo(`/admin/editsurvey/${id}`);
   };
 
   return (
@@ -57,7 +61,7 @@ const Admin = () => {
 
       {surveyList.length > 0 ? (
         <div className="survey-list">
-          <Stack gap={5}>
+          <Stack gap={3}>
             {surveyList.map((val, key) => {
               return (
                 <Card>
@@ -67,11 +71,16 @@ const Admin = () => {
                     <Card.Text>{val.description}</Card.Text>
                     <Button
                       variant="success"
-                      onClick={() => handleOnClick(val.id)}
+                      onClick={() => handleOnClickView(val.id)}
                     >
                       View Submissions
                     </Button>{" "}
-                    <Button variant="primary">Edit</Button>{" "}
+                    <Button
+                      variant="primary"
+                      onClick={() => handleOnClickEdit(val.id)}
+                    >
+                      Edit
+                    </Button>{" "}
                     <Button
                       onClick={() => deleteSurvey(val.id)}
                       variant="danger"
@@ -85,7 +94,7 @@ const Admin = () => {
           </Stack>
         </div>
       ) : (
-        <p>The List is empty!</p>
+        <p>The List is empty! 👻</p>
       )}
     </Container>
   );

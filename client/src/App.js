@@ -8,6 +8,7 @@ import NewSurvey from "./components/Admin/NewSurvey";
 import SurveyBuilder from "./components/Survey/SurveyBuilder";
 import ViewSubmission from "./components/Admin/ViewSubmission";
 import UserSurveySubmission from "./components/User/UserSurveySubmission";
+import EditSurvey from "./components/Admin/EditSurvey";
 import "./App.css";
 
 import User from "./components/User/User";
@@ -34,6 +35,8 @@ function App() {
                 path="/admin/viewsurvey/:sId/:uId"
                 element={<UserSurveySubmission />}
               />
+
+              <Route path="admin/editsurvey/:sId" element={<EditSurvey />} />
 
               <Route path="/user" element={<User />} />
             </Routes>
