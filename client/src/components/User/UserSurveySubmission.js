@@ -139,7 +139,7 @@ const UserSurveySubmission = () => {
         <div className="w-25 fixed">
           {surveyName && surveyDesc ? (
             <Stack>
-              <br />
+              {/* <br /> */}
               <h6>
                 <b>{userName}'s</b> response for:
               </h6>

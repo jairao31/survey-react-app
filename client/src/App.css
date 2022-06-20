@@ -37,6 +37,19 @@ body{
   
 }
 
+.edit-form{
+  width: 10cm;
+  margin: auto;
+  border:  1px solid grey;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.edit-btn{
+  justify-content: space-between;
+  display: flex;
+}
+
 .survey-main{
   justify-content: space-between;
   border:  1px solid grey;

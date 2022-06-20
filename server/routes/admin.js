@@ -98,16 +98,20 @@ router.post("/createQuestion/:surveyId", (req, res) => {
 
 //route to get survey details by id
 
-router.get('/getSurveyDetailsByID/:surveyId', (req,res) => {
+router.get("/getSurveyDetailsByID/:surveyId", (req, res) => {
   const surveyID = req.params.surveyId;
-  db.query("SELECT id, name, description FROM surveyList", (err, result) => {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(result);
+  db.query(
+    "SELECT id, name, description FROM surveyList WHERE id = ?",
+    surveyID,
+    (err, result) => {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(result);
+      }
     }
-  });
-})
+  );
+});
 
 //route to get all question
 router.get("/getAllQuestions/:surveyId", (req, res) => {
@@ -215,6 +219,24 @@ router.get("/getAnswerByUser/:surveyId/:uId", (req, res) => {
           arr.push(ob);
         });
         res.json(arr);
+      }
+    }
+  );
+});
+
+//route to update survey details
+router.patch("/editSurvey/:surveyId", async (req, res) => {
+  const surveyID = req.params.surveyId;
+  const reqData = req.body;
+  const { name, desc } = reqData;
+  await db.query(
+    "UPDATE surveyList SET name = ?, description = ? WHERE id = ?",
+    [name, desc, surveyID],
+    (err, result) => {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json("Survey details updated successfully!");
       }
     }
   );
