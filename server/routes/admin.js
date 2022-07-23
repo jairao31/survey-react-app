@@ -97,7 +97,7 @@ router.post("/createQuestion/:surveyId", (req, res) => {
 // });
 
 //route to get survey details by id
-
+//////////
 router.get("/getSurveyDetailsByID/:surveyId", (req, res) => {
   const surveyID = req.params.surveyId;
   db.query(

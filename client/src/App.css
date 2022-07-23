@@ -74,7 +74,18 @@ body{
   width: 100%;
 }
 
+fieldset.likertScale .likertIndicator {
+  /*   border: thin solid darkGreen; */
+    background-color: lightGray;
+  }
 
+.likertLine {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+  margin-top: 0.5em;
+  border-top: none;
+}
 
 .q-type{
   padding-left: 0px;
